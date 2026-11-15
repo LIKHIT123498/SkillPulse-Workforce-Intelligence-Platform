@@ -1,0 +1,1244 @@
+# PRODUCT REQUIREMENTS DOCUMENT (PRD)
+
+# SkillPulse – Workforce Intelligence Platform
+
+**SIH Problem Statement:** 26134  
+**Problem Statement Title:** Challenges in aligning skill development programs with industry requirements and emerging job market demands  
+**Organization:** Government of Maharashtra  
+**Department:** Maharashtra State Innovation Society, Department of Skills, Employment, Entrepreneurship and Innovation  
+**Project Type:** AI-powered Labour Market Intelligence and Curriculum Alignment Platform  
+**Document Version:** 1.0  
+**Status:** Development Planning  
+**Primary Backend:** Python + FastAPI  
+**Frontend:** React + TypeScript  
+**Database:** PostgreSQL
+
+---
+
+# 1. Executive Summary
+
+## 1.1 Product Overview
+
+SkillPulse is an AI-powered Labour Market Intelligence and Curriculum Alignment Platform designed to bridge the gap between industry skill requirements and existing skill-development programmes.
+
+The platform collects and analyses labour-market signals, including job postings, employer surveys, industry requirements, emerging technologies and training programme data.
+
+Using Natural Language Processing (NLP), Machine Learning (ML) and data analytics, SkillPulse identifies:
+
+- Skills currently demanded by industries.
+- Emerging and declining skill requirements.
+- Differences between industry expectations and existing course curricula.
+- Skill shortages across geographical locations.
+- Training programmes that require modification or modernization.
+- Potential curriculum improvements based on employment trends.
+
+The platform translates these insights into actionable recommendations for training institutions, government administrators, employers and candidates.
+
+## 1.2 Problem Statement
+
+Traditional skill-development programmes often rely on historical occupation classifications and outdated industry requirements.
+
+This creates several problems:
+
+1. Course curricula may not reflect current industry technologies.
+2. Training institutions may continue offering courses with declining employment demand.
+3. Employers struggle to find candidates with relevant competencies.
+4. Students may complete training programmes without acquiring industry-relevant skills.
+5. Government authorities lack a continuous, evidence-based mechanism to plan district-level training requirements.
+
+SkillPulse aims to address these challenges through a centralized, data-driven intelligence system.
+
+## 1.3 Product Vision
+
+To create a continuous intelligence ecosystem that connects labour-market demand, skill-development programmes, educational institutions and employment opportunities through data-driven insights.
+
+---
+
+# 2. Product Objectives
+
+The primary objectives are:
+
+| ID | Objective | Expected Outcome |
+|---|---|---|
+| OBJ-01 | Labour-market intelligence | Identify high-demand and emerging skills |
+| OBJ-02 | Skill extraction | Convert unstructured job descriptions into structured competencies |
+| OBJ-03 | Skill-gap detection | Identify mismatches between industry requirements and course curricula |
+| OBJ-04 | Curriculum alignment | Recommend relevant curriculum modifications |
+| OBJ-05 | District intelligence | Identify geographical differences in workforce demand |
+| OBJ-06 | Course evaluation | Flag potentially obsolete or oversupplied training programmes |
+| OBJ-07 | Employer validation | Allow employers to validate industry requirements and recommendations |
+| OBJ-08 | Career guidance | Help candidates identify relevant skills and training pathways |
+
+## 2.1 Success Metrics
+
+The following are initial product targets, not established results. They should be validated against the available dataset.
+
+- Successfully process at least 1,000 job-posting records in the initial demonstration dataset.
+- Extract and normalize relevant skills from job descriptions.
+- Map at least 50 distinct skills to a structured skill taxonomy.
+- Map at least 10 sample training courses to relevant industry competencies.
+- Generate explainable skill-gap reports.
+- Support district-level demand visualization.
+- Generate curriculum recommendations with supporting evidence.
+
+---
+
+# 3. Target Users and Stakeholders
+
+The platform will support four primary user categories.
+
+## 3.1 Government Administrators
+
+**Role:** Maharashtra State Skill Development Authorities and authorized administrators.
+
+Requirements:
+- View labour-market demand across districts.
+- Identify sectors experiencing skill shortages.
+- Monitor training programme effectiveness.
+- Identify potentially outdated courses.
+- Generate district-level workforce planning reports.
+- Review curriculum recommendations.
+
+## 3.2 Training Institutions
+
+**Role:** ITIs, vocational training centres and skill-development institutions.
+
+Requirements:
+- View industry-relevant skill requirements.
+- Compare existing curricula against industry expectations.
+- Identify missing competencies.
+- Receive recommended curriculum improvements.
+- Monitor course relevance.
+
+## 3.3 Employers and Industry Representatives
+
+**Role:** Companies, HR professionals and industry experts.
+
+Requirements:
+- Submit employer surveys.
+- Specify required technical and soft skills.
+- Validate skill-demand reports.
+- Provide feedback on training programmes.
+- Identify proficiency requirements for different job roles.
+
+## 3.4 Candidates and Students
+
+**Role:** Individuals seeking employment or skill-development opportunities.
+
+Requirements:
+- Explore emerging job roles.
+- Identify skills required for selected occupations.
+- Discover relevant courses and training programmes.
+- Understand their skill gaps.
+- Receive career-development recommendations.
+
+---
+
+# 4. Functional Requirements
+
+The product is divided into five primary functional modules.
+
+## MODULE 1: Labour Market Intelligence
+
+**Priority: P0 – Core MVP**
+
+### Purpose
+
+Collect, process and analyse job-market information to understand current and emerging industry requirements.
+
+### Functional Requirements
+
+FR-101: The system shall support importing job-posting datasets through CSV files.
+
+FR-102: The system shall store job title, company, location, sector, description, experience requirements and associated skills wherever available.
+
+FR-103: The system shall preprocess job descriptions by removing unnecessary formatting, duplicate content and irrelevant text.
+
+FR-104: The system shall extract technical skills, tools, technologies and competencies from job descriptions using NLP.
+
+FR-105: The system shall normalize equivalent skill names into standardized skill identifiers.
+
+FR-106: The system shall calculate skill-demand frequency across job roles and locations.
+
+FR-107: The system shall identify emerging and declining skill-demand patterns when sufficient historical data is available.
+
+### Expected Output
+
+A labour-market intelligence dashboard containing:
+
+- Most demanded technical skills.
+- Emerging technologies.
+- Skill demand by job role.
+- Skill demand by industry sector.
+- Geographical demand distribution.
+- Experience and proficiency requirements.
+
+---
+
+## MODULE 2: Skill Gap Analysis
+
+**Priority: P0 – Core MVP**
+
+### Purpose
+
+Compare industry skill requirements against the competencies covered by existing training programmes.
+
+### Functional Requirements
+
+FR-201: The system shall maintain a structured skill taxonomy.
+
+FR-202: The system shall maintain a database of available courses and their associated skills.
+
+FR-203: The system shall compare industry-required skills with course-covered skills.
+
+FR-204: The system shall identify missing, partially covered and adequately covered competencies.
+
+FR-205: The system shall calculate a skill-alignment score for each course.
+
+FR-206: The system shall generate a report describing the differences between industry requirements and course curricula.
+
+### Skill Alignment Logic
+
+For the MVP, implement a weighted skill coverage score:
+
+Skill Alignment Score:
+
+(Number of weighted required skills covered / Total weighted required skills) × 100
+
+The implementation must account for proficiency requirements and skill importance where data is available.
+
+### Example
+
+Suppose an industry role requires:
+
+- Python – 25%
+- SQL – 25%
+- Machine Learning – 20%
+- Cloud Computing – 15%
+- Data Visualization – 15%
+
+An existing course covers Python, SQL and basic Data Visualization.
+
+The platform should identify:
+
+- Covered: Python, SQL.
+- Partially covered: Data Visualization.
+- Missing: Machine Learning, Cloud Computing.
+
+The resulting alignment score should be accompanied by the underlying skill-level explanation rather than presented as an unexplained number.
+
+### Expected Output
+
+A skill-gap report containing:
+
+- Course name.
+- Target job role.
+- Industry-required competencies.
+- Existing course competencies.
+- Missing competencies.
+- Skill alignment percentage.
+- Recommended improvements.
+
+---
+
+## MODULE 3: Curriculum Recommendation Engine
+
+**Priority: P1 – Advanced MVP**
+
+### Purpose
+
+Recommend curriculum modifications based on industry demand and detected skill gaps.
+
+### Functional Requirements
+
+FR-301: The system shall identify missing competencies in existing courses.
+
+FR-302: The system shall prioritize missing skills based on industry demand and relevance.
+
+FR-303: The system shall generate suggested topics and learning outcomes for curriculum improvement.
+
+FR-304: The system shall provide explanations for every recommendation.
+
+FR-305: The system shall allow authorized administrators to review, approve or reject recommendations.
+
+FR-306: The system shall retain the original curriculum and proposed modifications separately.
+
+### Recommendation Engine
+
+The recommendation process should combine:
+
+1. Skill-demand frequency.
+2. Industry relevance.
+3. Course alignment score.
+4. Emerging technology trends.
+5. Employer feedback.
+6. Skill proficiency requirements.
+
+An LLM can generate human-readable curriculum suggestions using structured analytical results.
+
+**Important:** The LLM must not independently determine labour-market demand. Numerical demand calculations must come from verified data and analytical pipelines.
+
+### Expected Output
+
+Example:
+
+Existing Course: Diploma in Computer Applications
+
+Identified Gap: Limited coverage of modern data analytics tools.
+
+Suggested Improvements:
+- Introduce Python for Data Analysis.
+- Add SQL-based data management.
+- Include practical data visualization exercises.
+- Introduce introductory cloud computing concepts.
+
+These are illustrative recommendations, not validated curriculum changes.
+
+---
+
+## MODULE 4: District-Level Workforce Intelligence
+
+**Priority: P1 – Advanced MVP**
+
+### Purpose
+
+Help government authorities understand workforce requirements across Maharashtra.
+
+### Functional Requirements
+
+FR-401: The system shall maintain district-level employment and training information.
+
+FR-402: The system shall associate job postings with geographical locations wherever reliable location information exists.
+
+FR-403: The system shall aggregate skill demand by district.
+
+FR-404: The system shall identify geographical skill shortages.
+
+FR-405: The system shall generate district-level training recommendations.
+
+FR-406: The system shall visualize sector-wise employment demand.
+
+### Expected Output
+
+A Maharashtra district intelligence dashboard displaying:
+
+- High-demand skills by district.
+- Sector-wise job demand.
+- Available training programmes.
+- Identified skill shortages.
+- Recommended training priorities.
+- Potential course oversupply indicators.
+
+District comparisons must account for dataset coverage. Missing job-posting data must not be interpreted as zero employment demand.
+
+---
+
+## MODULE 5: Employer Validation and Candidate Guidance
+
+**Priority: P2 – Future Enhancement**
+
+### Employer Validation
+
+FR-501: Employers shall be able to register and submit industry skill surveys.
+
+FR-502: Employers shall specify job roles, required skills and proficiency levels.
+
+FR-503: Employers shall validate or challenge existing skill-demand findings.
+
+FR-504: Authorized administrators shall review employer feedback.
+
+### Candidate Guidance
+
+FR-505: Candidates shall be able to explore relevant job roles.
+
+FR-506: Candidates shall view the skills required for selected occupations.
+
+FR-507: The system shall recommend relevant training courses based on selected career goals and available candidate skill information.
+
+FR-508: Candidates shall receive an explainable skill-gap report.
+
+---
+
+# 5. Non-Functional Requirements
+
+| ID | Requirement | Description |
+|---|---|---|
+| NFR-01 | Performance | API responses should generally complete within 2 seconds for normal database-backed requests |
+| NFR-02 | Scalability | Modular architecture supporting future data growth |
+| NFR-03 | Security | Secure authentication and role-based access control |
+| NFR-04 | Reliability | Validate imported datasets and handle processing failures |
+| NFR-05 | Maintainability | Modular backend with clear separation of responsibilities |
+| NFR-06 | Usability | Responsive, accessible and understandable dashboards |
+| NFR-07 | Explainability | Recommendations must expose their underlying evidence |
+| NFR-08 | Data Integrity | Enforce database constraints and prevent duplicate records |
+| NFR-09 | Privacy | Protect employer and candidate information |
+| NFR-10 | Auditability | Track administrative approvals and curriculum changes |
+
+---
+
+# 6. Proposed Technology Stack
+
+## 6.1 Frontend
+
+| Technology | Purpose |
+|---|---|
+| React | Frontend application |
+| TypeScript | Type safety |
+| Tailwind CSS | UI styling |
+| Recharts | Analytical visualizations |
+| React Router | Application navigation |
+| Axios | Backend API communication |
+
+## 6.2 Backend
+
+| Technology | Purpose |
+|---|---|
+| Python | Primary programming language |
+| FastAPI | REST API development |
+| Pydantic | Request and response validation |
+| SQLAlchemy | Database ORM |
+| Alembic | Database migrations |
+| JWT / OAuth2 | Authentication |
+| Pandas | Data processing |
+| Celery or background task alternative | Long-running processing, if required |
+
+## 6.3 Database
+
+**PostgreSQL**
+
+The database will store:
+
+- User accounts and roles.
+- Job postings.
+- Companies and industry sectors.
+- Skills and skill categories.
+- Job-to-skill mappings.
+- Courses and curricula.
+- Course-to-skill mappings.
+- Skill-gap analysis results.
+- Curriculum recommendations.
+- District-level information.
+- Employer surveys.
+- Candidate profiles.
+
+## 6.4 AI and Machine Learning
+
+| Technology | Purpose |
+|---|---|
+| spaCy | NLP preprocessing and entity extraction |
+| Sentence Transformers | Semantic skill matching |
+| Scikit-learn | Clustering, classification and analytical models |
+| Pandas / NumPy | Statistical processing |
+| Gemini API | Natural-language curriculum recommendations |
+| Matplotlib / Recharts | Analytical visualization |
+
+### AI Implementation Principle
+
+Use deterministic Python logic wherever possible for numerical calculations, filtering, aggregation and scoring.
+
+Use NLP and semantic models for extracting and matching skills.
+
+Use LLMs for generating explanations and structured recommendations.
+
+Do not use an LLM as the sole source of employment statistics or skill-demand scores.
+
+---
+
+# 7. System Architecture
+
+The platform shall follow a modular monolithic architecture for the initial release.
+
+This keeps deployment and debugging manageable while allowing individual modules to evolve independently.
+
+## 7.1 High-Level Architecture
+
+React Frontend
+↓
+FastAPI API Gateway
+↓
+Authentication and Authorization
+↓
+Business Logic Layer
+↓
+Domain Modules:
+
+1. Labour Market Intelligence
+2. Skill Extraction and Normalization
+3. Skill Gap Analysis
+4. Curriculum Recommendation
+5. District Intelligence
+6. Employer and Candidate Management
+
+↓
+Data and Intelligence Layer:
+
+- NLP Pipeline
+- ML Models
+- Recommendation Engine
+- Data Processing Services
+
+↓
+PostgreSQL Database
+
+External inputs:
+
+- Public job-market datasets.
+- Authorized job-posting data sources.
+- Employer surveys.
+- Course and curriculum datasets.
+- Public sector and district statistics.
+
+## 7.2 Suggested Backend Structure
+
+```text
+skillpulse/
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   │
+│   │   ├── core/
+│   │   │   ├── config.py
+│   │   │   ├── security.py
+│   │   │   └── dependencies.py
+│   │   │
+│   │   ├── database/
+│   │   │   ├── session.py
+│   │   │   └── base.py
+│   │   │
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── api/
+│   │   │   └── v1/
+│   │   │
+│   │   ├── services/
+│   │   │   ├── job_ingestion.py
+│   │   │   ├── skill_extraction.py
+│   │   │   ├── skill_normalization.py
+│   │   │   ├── gap_analysis.py
+│   │   │   ├── curriculum_engine.py
+│   │   │   └── district_analytics.py
+│   │   │
+│   │   ├── ml/
+│   │   │   ├── nlp_pipeline.py
+│   │   │   ├── skill_matcher.py
+│   │   │   └── recommendation_model.py
+│   │   │
+│   │   └── tests/
+│   │
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   ├── services/
+│   │   ├── hooks/
+│   │   ├── types/
+│   │   └── App.tsx
+│   │
+│   └── package.json
+│
+├── datasets/
+├── documentation/
+├── scripts/
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
+The folder structure is a proposed starting point. The team may refine it while preserving separation between API routes, business logic, database models and AI services.
+
+---
+
+# 8. Database Design Requirements
+
+The following entities form the initial relational data model.
+
+| Entity | Important attributes |
+|---|---|
+| Users | id, name, email, password_hash, role |
+| Districts | id, district_name, state |
+| Companies | id, company_name, industry_id |
+| Industries | id, industry_name |
+| JobPostings | id, title, description, company_id, district_id, posted_date |
+| Skills | id, skill_name, category, canonical_name |
+| JobSkills | id, job_id, skill_id, importance, proficiency |
+| Courses | id, course_name, qualification, institution_id |
+| CourseSkills | id, course_id, skill_id, coverage_level |
+| SkillGapReports | id, course_id, target_role, alignment_score |
+| Recommendations | id, course_id, skill_id, recommendation_text, status |
+| EmployerSurveys | id, employer_id, job_role, submitted_at |
+| SurveySkills | id, survey_id, skill_id, proficiency |
+| CandidateProfiles | id, user_id, district_id |
+| CandidateSkills | id, candidate_id, skill_id, proficiency |
+
+### Database Design Rules
+
+1. Use UUID or another consistent primary-key strategy.
+2. Establish foreign-key relationships.
+3. Add indexes to frequently queried columns.
+4. Prevent duplicate canonical skills.
+5. Store original imported job descriptions for traceability.
+6. Track dataset source and import timestamps.
+7. Keep generated recommendations separate from approved curriculum changes.
+8. Preserve the provenance of analytical results.
+
+A formal ER diagram must be prepared before implementing database relationships.
+
+---
+
+# 9. Core API Requirements
+
+All APIs should use a consistent JSON response structure and appropriate HTTP status codes.
+
+Initial endpoint design:
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /api/v1/auth/register | User registration |
+| POST | /api/v1/auth/login | User login |
+| POST | /api/v1/jobs/import | Import job dataset |
+| GET | /api/v1/jobs | Retrieve job postings |
+| GET | /api/v1/skills | Retrieve skill taxonomy |
+| GET | /api/v1/analytics/skills | Skill-demand analytics |
+| GET | /api/v1/analytics/districts | District-level analytics |
+| POST | /api/v1/courses | Create course |
+| GET | /api/v1/courses | Retrieve courses |
+| POST | /api/v1/analysis/skill-gap | Generate skill-gap analysis |
+| GET | /api/v1/analysis/{id} | Retrieve analysis report |
+| POST | /api/v1/recommendations | Generate curriculum recommendations |
+| GET | /api/v1/recommendations | Retrieve recommendations |
+| PATCH | /api/v1/recommendations/{id} | Update recommendation status |
+| POST | /api/v1/employer/surveys | Submit employer survey |
+
+The API contract must be finalized before frontend integration.
+
+Use pagination, filtering, validation and consistent error responses wherever appropriate.
+
+---
+
+# 10. AI Agent and Development Workflow
+
+This section is particularly important when using AI coding agents such as Cursor, Claude Code, GitHub Copilot or other development assistants.
+
+## 10.1 Agent Responsibilities
+
+Divide AI-assisted development into specialized responsibilities.
+
+### Agent 1: Backend Development Agent
+
+Responsibilities:
+- Develop FastAPI application structure.
+- Implement REST endpoints.
+- Develop Pydantic schemas.
+- Implement SQLAlchemy models.
+- Integrate PostgreSQL.
+- Implement authentication and authorization.
+- Write backend unit tests.
+
+Restrictions:
+- Do not implement business logic directly inside API route handlers.
+- Do not change database schemas without updating migrations.
+- Do not introduce additional frameworks without approval.
+
+### Agent 2: Frontend Development Agent
+
+Responsibilities:
+- Develop React application.
+- Implement dashboards and layouts.
+- Create reusable UI components.
+- Integrate backend APIs.
+- Develop charts and data tables.
+- Implement role-based navigation.
+- Handle loading, error and empty states.
+
+Restrictions:
+- Do not hardcode analytical results.
+- Do not create fake API responses for production functionality.
+- Follow agreed API contracts.
+
+### Agent 3: AI / NLP Development Agent
+
+Responsibilities:
+- Develop job-description preprocessing.
+- Extract technical skills.
+- Normalize skill terminology.
+- Implement semantic skill matching.
+- Develop skill-gap analysis.
+- Integrate LLM-based curriculum recommendations.
+- Evaluate extraction and matching quality.
+
+Restrictions:
+- Do not fabricate labour-market statistics.
+- Do not treat LLM output as verified ground truth.
+- Preserve traceability to source data.
+- Return structured outputs using agreed schemas.
+
+### Agent 4: Database and Integration Agent
+
+Responsibilities:
+- Design and maintain database relationships.
+- Prepare ER diagrams.
+- Create migrations.
+- Optimize queries and indexing.
+- Validate API/database integration.
+- Maintain sample datasets and seed scripts.
+
+### Agent 5: QA and Documentation Agent
+
+Responsibilities:
+- Write test cases.
+- Perform API testing.
+- Validate frontend workflows.
+- Identify integration issues.
+- Maintain technical documentation.
+- Verify acceptance criteria before feature completion.
+
+These roles can be assigned to human team members or used as separate AI-agent responsibilities. One developer may manage multiple roles.
+
+## 10.2 AI Agent Development Rules
+
+Every coding agent must follow these rules:
+
+1. Read the PRD before generating code.
+2. Read the existing project structure before modifying files.
+3. Understand existing database schemas and API contracts.
+4. Never overwrite working code without examining its dependencies.
+5. Implement one feature at a time.
+6. Generate tests alongside new functionality.
+7. Follow consistent naming conventions.
+8. Never hardcode API keys, credentials or passwords.
+9. Use environment variables for configuration.
+10. Update documentation after significant changes.
+11. Do not introduce unapproved dependencies.
+12. Report assumptions, limitations and incomplete work.
+13. Do not claim a feature is complete until it passes its acceptance tests.
+
+## 10.3 Recommended AI Agent Workflow
+
+For every feature:
+
+**Step 1: Requirement Analysis**
+
+Read the relevant PRD section and identify inputs, outputs and dependencies.
+
+**Step 2: Technical Planning**
+
+Identify required files, database changes, API endpoints and tests.
+
+**Step 3: Implementation**
+
+Generate code following existing architectural conventions.
+
+**Step 4: Verification**
+
+Run tests, inspect errors and validate expected outputs.
+
+**Step 5: Integration**
+
+Integrate the feature with dependent modules.
+
+**Step 6: Documentation**
+
+Update API documentation, README and development progress.
+
+No agent should independently redesign the overall architecture during feature implementation.
+
+---
+
+# 11. User Interface Requirements
+
+The platform should have a professional government-technology dashboard design.
+
+## 11.1 Main Navigation
+
+- Overview Dashboard
+- Labour Market Intelligence
+- Skill Explorer
+- Skill Gap Analysis
+- Curriculum Recommendations
+- District Intelligence
+- Employer Insights
+- Course Management
+- Reports and Analytics
+- User Management
+
+Navigation visibility must depend on the authenticated user's role.
+
+## 11.2 Dashboard Requirements
+
+The overview dashboard should display:
+
+**Key Metrics**
+- Total job postings analysed.
+- Number of unique skills identified.
+- High-demand skills.
+- Courses analysed.
+- Average course alignment score.
+
+**Visualizations**
+- Top 10 demanded skills.
+- Skill demand by sector.
+- District-level demand distribution.
+- Emerging skill trends over time.
+- Course alignment comparisons.
+
+**Filters**
+- District.
+- Industry sector.
+- Job role.
+- Skill category.
+- Date range.
+
+All dashboard metrics must be derived from the backend database and analytical services.
+
+---
+
+# 12. Data Collection and Management Strategy
+
+Data availability is a major dependency for this project.
+
+The system must support multiple data inputs.
+
+## 12.1 Initial Data Sources
+
+Potential sources to investigate:
+
+1. Public job-posting datasets.
+2. Authorized job-board APIs or permitted data exports.
+3. Government employment and labour statistics.
+4. Public skill-development and qualification frameworks.
+5. Training institution course catalogues.
+6. Employer survey responses.
+7. Public district-level economic and industrial datasets.
+
+Potential datasets and frameworks to investigate include:
+
+- National Career Service.
+- Skill India / NSDC resources.
+- National Classification of Occupations.
+- National Skills Qualifications Framework.
+- Public labour-market datasets available through Kaggle.
+- Government Open Data Platform (data.gov.in).
+
+Availability, licensing, access permissions and update frequency must be verified before integration.
+
+Do not assume that a publicly accessible website permits unrestricted scraping.
+
+## 12.2 Data Processing Pipeline
+
+Raw Dataset
+↓
+Data Validation
+↓
+Data Cleaning
+↓
+Duplicate Removal
+↓
+Job Description Preprocessing
+↓
+NLP Skill Extraction
+↓
+Skill Normalization
+↓
+Database Storage
+↓
+Demand Analytics
+↓
+Skill Gap Analysis
+↓
+Recommendation Generation
+
+Every processing stage should log errors and preserve source references.
+
+## 12.3 Data Quality Requirements
+
+- Remove duplicate job postings where identifiable.
+- Validate missing and malformed records.
+- Standardize district and industry names.
+- Normalize equivalent skill names.
+- Preserve source and timestamp information.
+- Track the date range covered by the dataset.
+- Flag insufficient or outdated data.
+
+The system must distinguish between actual low demand and insufficient data.
+
+---
+
+# 13. MVP Scope and Feature Prioritization
+
+The initial version must focus on demonstrating the core problem-solving pipeline.
+
+## P0 – Must Have
+
+- FastAPI backend setup.
+- PostgreSQL database integration.
+- Basic authentication and role management.
+- Job-posting CSV import.
+- Job-description preprocessing.
+- NLP-based skill extraction.
+- Skill taxonomy.
+- Skill-demand analytics.
+- Course and curriculum data management.
+- Basic skill-gap analysis.
+- React analytics dashboard.
+
+## P1 – Should Have
+
+- Semantic skill matching.
+- Weighted course-alignment scoring.
+- LLM-assisted curriculum recommendations.
+- District-level analytics.
+- Employer survey module.
+- Recommendation approval workflow.
+- Downloadable analytical reports.
+
+## P2 – Future Enhancements
+
+- Candidate skill profiles.
+- Personalized career guidance.
+- Predictive skill-demand forecasting.
+- Advanced ML models.
+- Live job-market integrations.
+- Multi-state expansion.
+- Automated curriculum update tracking.
+
+**Scope rule:** Complete the P0 functionality before spending significant time on P2 features.
+
+---
+
+# 14. Development Roadmap
+
+The project should be developed through short, verifiable milestones.
+
+## Phase 1: Foundation
+
+Deliverables:
+- Finalized PRD.
+- System architecture.
+- ER diagram.
+- GitHub repository.
+- Backend and frontend initialization.
+- Database connection.
+- Basic API health checks.
+
+Exit criteria: The application runs locally and successfully connects to PostgreSQL.
+
+## Phase 2: Data and Backend
+
+Deliverables:
+- Database models.
+- CSV import functionality.
+- Data validation.
+- Job-posting storage.
+- Skill taxonomy.
+- API documentation.
+
+Exit criteria: A sample job dataset can be imported, queried and validated.
+
+## Phase 3: AI and Analytics
+
+Deliverables:
+- NLP preprocessing.
+- Skill extraction.
+- Skill normalization.
+- Demand aggregation.
+- Skill-demand analytics.
+
+Exit criteria: The system can process sample job descriptions and produce structured skill-demand results.
+
+## Phase 4: Skill Gap and Curriculum Intelligence
+
+Deliverables:
+- Course management.
+- Course-to-skill mapping.
+- Weighted skill alignment.
+- Gap reports.
+- Curriculum recommendation generation.
+
+Exit criteria: A user can compare a course with industry requirements and receive an explainable gap report.
+
+## Phase 5: Frontend and Integration
+
+Deliverables:
+- Authentication screens.
+- Overview dashboard.
+- Labour-market dashboard.
+- Skill-gap interface.
+- Curriculum recommendation interface.
+- API integration.
+
+Exit criteria: Users can complete the main workflows through the frontend.
+
+## Phase 6: District Intelligence and Finalization
+
+Deliverables:
+- District analytics.
+- Visualizations.
+- Employer validation prototype.
+- Testing.
+- Documentation.
+- Deployment.
+- SIH demonstration.
+
+Exit criteria: The team can demonstrate an end-to-end workflow using a documented dataset.
+
+---
+
+# 15. Testing and Quality Assurance
+
+Testing must happen throughout development rather than only before submission.
+
+## 15.1 Backend Testing
+
+- Authentication tests.
+- API endpoint tests.
+- Database CRUD tests.
+- Input validation tests.
+- Dataset import tests.
+- Permission tests.
+
+Suggested tools: Pytest and HTTPX.
+
+## 15.2 AI/NLP Testing
+
+- Skill extraction precision and recall.
+- Skill normalization accuracy.
+- Semantic matching quality.
+- Duplicate detection.
+- Recommendation consistency.
+- Handling of incomplete job descriptions.
+
+For skill extraction, prepare a manually annotated test set to evaluate actual performance.
+
+## 15.3 Frontend Testing
+
+- Navigation.
+- Form validation.
+- Dashboard loading.
+- Chart rendering.
+- API error handling.
+- Role-based access.
+- Responsive layout.
+
+## 15.4 Integration Testing
+
+Verify the complete pipeline:
+
+Job Dataset Import
+→ Skill Extraction
+→ Skill Demand Analysis
+→ Course Comparison
+→ Gap Report
+→ Curriculum Recommendation
+→ Dashboard Visualization
+
+The complete workflow must work without manually editing the database.
+
+---
+
+# 16. Security and Governance
+
+Since this platform may eventually be used by government institutions and employers, data governance is important.
+
+Requirements:
+
+- Password hashing.
+- JWT-based authentication.
+- Role-based authorization.
+- Input validation.
+- Secure environment-variable management.
+- Restricted administrative operations.
+- Audit logs for important changes.
+- Data-source attribution.
+- Privacy protection for candidate and employer information.
+
+AI-generated curriculum recommendations must remain advisory until reviewed and approved by authorized human stakeholders.
+
+The platform must not automatically classify a district or training institution as underperforming based on incomplete datasets.
+
+---
+
+# 17. Risks and Mitigation
+
+| Risk | Mitigation |
+|---|---|
+| Insufficient job-market data | Start with documented sample datasets and disclose coverage |
+| Inaccurate skill extraction | Combine NLP models with normalization and human validation |
+| Unreliable AI recommendations | Ground recommendations in calculated analytics |
+| Incomplete district information | Use only geographically attributable records |
+| Scope expansion | Prioritize P0 features |
+| LLM API failures | Implement retries, validation and graceful fallbacks |
+| Database inconsistencies | Use migrations, constraints and automated tests |
+| Team integration conflicts | Maintain shared API contracts and Git conventions |
+| Limited development time | Deliver a small end-to-end pipeline early |
+
+---
+
+# 18. GitHub and Team Collaboration Guidelines
+
+## Branching Strategy
+
+- main: Stable and tested releases.
+- develop: Integrated development.
+- feature/backend: Backend development.
+- feature/frontend: Frontend development.
+- feature/nlp: AI and NLP development.
+- feature/database: Database changes.
+
+Feature branches should be merged through pull requests.
+
+## Commit Convention
+
+Use descriptive commit messages:
+
+- feat: Add job posting CSV import.
+- feat: Implement skill extraction pipeline.
+- fix: Resolve duplicate skill mapping.
+- docs: Update API documentation.
+- test: Add skill-gap analysis tests.
+- refactor: Separate business logic from API routes.
+
+## Definition of Done
+
+A feature is considered complete only when:
+
+1. Requirements are implemented.
+2. Code follows project conventions.
+3. Tests pass.
+4. Database changes are migrated.
+5. API documentation is updated.
+6. Frontend integration is verified, where applicable.
+7. No known critical bugs remain.
+8. Changes are committed and reviewed.
+
+---
+
+# 19. Expected Final Deliverables
+
+The completed project should include:
+
+1. Functional React frontend.
+2. FastAPI backend.
+3. PostgreSQL database.
+4. Job-market data ingestion pipeline.
+5. NLP-based skill extraction module.
+6. Skill-demand analytics engine.
+7. Course and curriculum management.
+8. Skill-gap analysis engine.
+9. AI-assisted curriculum recommendation module.
+10. District-level intelligence dashboard.
+11. Authentication and role management.
+12. Technical documentation.
+13. ER diagram and system architecture.
+14. API documentation.
+15. Testing reports.
+16. Deployment instructions.
+17. Demonstration dataset and sample workflow.
+
+---
+
+# 20. Final Product Acceptance Criteria
+
+SkillPulse's MVP will be considered successful when a demonstration user can:
+
+1. Log in to the platform.
+2. Import a sample job-posting dataset.
+3. View the processed job records.
+4. Extract and explore industry-required skills.
+5. View skill-demand analytics.
+6. Select an existing training course.
+7. Compare its curriculum against the skills required by a selected job role.
+8. Identify missing competencies.
+9. Generate curriculum improvement recommendations.
+10. View the resulting analytical report on the dashboard.
+
+The district-level extension should demonstrate how the same intelligence pipeline can support geographically targeted training recommendations using district-attributed data.
+
+---
+
+# 21. Instructions for AI Coding Agents
+
+This section is the primary execution instruction for AI development tools.
+
+You are an AI software engineering agent working on SkillPulse – Workforce Intelligence Platform.
+
+Your task is to help develop a production-conscious, modular and maintainable software prototype addressing SIH Problem Statement 26134.
+
+Follow these instructions:
+
+1. Treat this PRD as the primary product specification.
+2. Use Python and FastAPI for backend development.
+3. Use React, TypeScript and Tailwind CSS for frontend development.
+4. Use PostgreSQL with SQLAlchemy for persistence.
+5. Maintain separation between API routes, schemas, models and business logic.
+6. Implement the NLP pipeline as an independently testable service.
+7. Keep analytical calculations separate from LLM-generated explanations.
+8. Use Pydantic schemas for structured inputs and outputs.
+9. Implement features in the order defined by the development roadmap.
+10. Write tests for every major business function.
+11. Avoid unnecessary dependencies and premature microservices.
+12. Maintain consistent API contracts between frontend and backend.
+13. Never fabricate dataset statistics or model performance metrics.
+14. Never claim unimplemented functionality as completed.
+15. Update documentation whenever architecture or API contracts change.
+
+### Execution Protocol
+
+Before writing code:
+
+- Inspect the repository.
+- Read the relevant PRD section.
+- Identify existing implementation.
+- Identify dependencies.
+- Propose a concise implementation plan.
+
+During implementation:
+
+- Work on one feature at a time.
+- Reuse existing components where appropriate.
+- Avoid modifying unrelated modules.
+- Include error handling and validation.
+- Add tests.
+
+After implementation:
+
+- Run the relevant tests.
+- Report modified files.
+- Report test results.
+- List known limitations.
+- Identify the next logical development task.
+
+Do not begin implementing every module simultaneously.
+
+**First development task:** Initialize the FastAPI backend, PostgreSQL connection, SQLAlchemy configuration, project structure and health-check endpoint. Verify successful database connectivity before proceeding to the first functional module.
+
+---
+
+# 22. Product Direction and Long-Term Vision
+
+SkillPulse should evolve beyond a job-market analytics dashboard.
+
+Its long-term purpose is to establish a continuous feedback loop between industry demand and skill-development programmes.
+
+The intended cycle is:
+
+**Industry Demand → Skill Identification → Gap Analysis → Curriculum Modernization → Training Delivery → Placement Outcomes → Industry Feedback**
+
+The platform should eventually use placement outcomes and employer feedback to evaluate whether recommended curriculum changes actually improve employment readiness.
+
+This creates an evidence-based system for continuously improving workforce development.
+
+**Core Product Principle:**
+
+SkillPulse should not merely tell users which skills are popular. It should explain which skills are missing, where they are missing, why they matter and what training institutions should do about them.
+
+---
+
+**END OF PRODUCT REQUIREMENTS DOCUMENT**
+
+**Document Owner:** SkillPulse Development Team  
+**Version:** 1.0  
+**Next Review:** After completion of system architecture and database design
