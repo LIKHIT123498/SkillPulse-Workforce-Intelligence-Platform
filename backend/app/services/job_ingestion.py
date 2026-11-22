@@ -1,6 +1,6 @@
 """
 Job Ingestion Service: Handles CSV and batch ingestion of job postings,
-skill taxonomy mapping, and district normalization.
+skill taxonomy mapping, and district normalization with NLP auto-extraction.
 """
 import csv
 import io
@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from app.models.job import JobPosting, JobSkill
 from app.models.location import District
 from app.models.skill import Skill
+from app.ml.skill_matcher import skill_extractor
+from app.services.skill_normalization import SkillNormalizer
 
 def get_or_create_district(db: Session, district_name: str) -> int:
     if not district_name or not district_name.strip():
@@ -26,9 +28,18 @@ def get_or_create_skill(db: Session, skill_name: str, category: str = "General")
     cleaned = skill_name.strip()
     if not cleaned:
         return None
-    skill = db.query(Skill).filter(Skill.skill_name.ilike(cleaned)).first()
+    
+    # Check if normalized canonical alias exists
+    norm = SkillNormalizer.normalize(cleaned)
+    canonical_name = norm[0] if norm else cleaned
+    cat = norm[1] if norm else category
+
+    skill = db.query(Skill).filter(
+        (Skill.skill_name.ilike(cleaned)) | (Skill.canonical_name.ilike(canonical_name))
+    ).first()
+    
     if not skill:
-        skill = Skill(skill_name=cleaned, canonical_name=cleaned, category=category)
+        skill = Skill(skill_name=cleaned, canonical_name=canonical_name, category=cat)
         db.add(skill)
         db.flush()
     return skill.id
@@ -63,11 +74,25 @@ def ingest_job_record(db: Session, record: Dict[str, Any]) -> JobPosting:
         # CSV string of skills separated by commas or pipes
         raw_skills = [s.strip() for s in raw_skills.replace("|", ",").split(",") if s.strip()]
 
+    associated_skill_ids = set()
+
+    # 1. Add provided skills
     for s_name in raw_skills:
         s_id = get_or_create_skill(db, s_name)
-        if s_id:
+        if s_id and s_id not in associated_skill_ids:
+            associated_skill_ids.add(s_id)
             job_skill = JobSkill(job_id=job.id, skill_id=s_id, importance=1.0)
             db.add(job_skill)
+
+    # 2. NLP Auto-Extraction fallback or enrichment if skills were sparse
+    if len(associated_skill_ids) < 3 and description:
+        extracted = skill_extractor.extract_from_text(f"{title} {description}")
+        for item in extracted:
+            s_id = get_or_create_skill(db, item["canonical_name"], item["category"])
+            if s_id and s_id not in associated_skill_ids:
+                associated_skill_ids.add(s_id)
+                job_skill = JobSkill(job_id=job.id, skill_id=s_id, importance=item["importance"])
+                db.add(job_skill)
 
     return job
 
@@ -78,7 +103,6 @@ def ingest_jobs_from_csv(db: Session, csv_content: str) -> Dict[str, Any]:
 
     for idx, row in enumerate(reader, start=1):
         try:
-            # Map common CSV header aliases
             norm_row = {
                 "title": row.get("title") or row.get("job_title") or row.get("Role") or "",
                 "description": row.get("description") or row.get("job_description") or "",
