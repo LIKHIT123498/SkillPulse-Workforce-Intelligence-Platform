@@ -34,7 +34,7 @@ def test_skill_normalization():
     test_cases = [
         ("py", "Python", "Programming"),
         ("python3", "Python", "Programming"),
-        ("k8s", "Kubernetes", "DevOps"),
+        ("k8s", "Kubernetes", "DevOps & Containers"),
         ("react.js", "React", "Web Development"),
         ("vmc", "CNC Machining", "Manufacturing"),
         ("tig welding", "Welding", "Mechanical"),

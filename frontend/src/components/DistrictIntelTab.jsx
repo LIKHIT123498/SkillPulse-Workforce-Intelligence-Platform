@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../services/api";
-import { MapPin, Building2, TrendingUp, AlertCircle, BarChart3 } from "lucide-react";
+import { MapPin, Building2, TrendingUp, BarChart3, Code2 } from "lucide-react";
 
 export function DistrictIntelTab() {
   const [districts, setDistricts] = useState([]);
@@ -16,43 +16,48 @@ export function DistrictIntelTab() {
       const res = await api.getDistrictDemand();
       setDistricts(res);
     } catch (e) {
-      console.error("Failed to load district intelligence:", e);
+      console.error("Failed to load tech hub telemetry:", e);
     } finally {
       setLoading(false);
     }
   }
 
-  // District profiles with industry specializations across Maharashtra
-  const districtProfiles = {
+  // Premier Indian Tech Hub Profiles & Hiring Stack Focus
+  const techHubProfiles = {
+    "Bengaluru": {
+      focus: "High-Throughput Microservices, AI/ML, Cloud Native & FinTech",
+      keySkills: ["Go", "Python", "Kubernetes", "Redis", "Kafka", "Generative AI & LLMs"],
+      tier: "Tier-1 Primary Tech Cluster (Silicon Valley of India)"
+    },
+    "Hyderabad": {
+      focus: "Enterprise Cloud Platforms, Big Tech R&D & Distributed Systems",
+      keySkills: ["AWS Cloud", "Docker", "CI/CD Pipelines", "Java", "Python"],
+      tier: "Tier-1 Cloud & Enterprise Engineering Hub"
+    },
     "Pune": {
-      focus: "Automotive, Engineering & Information Technology",
-      keySkills: ["Python", "CNC Machining", "AutoCAD", "Machine Learning"],
-      status: "High Tech Growth Hub"
+      focus: "Product Consulting, Automotive Tech & Cloud Native Backend",
+      keySkills: ["Python", "FastAPI", "Docker", "PostgreSQL", "Machine Learning"],
+      tier: "Tier-1 Software Engineering & Research Center"
     },
-    "Mumbai City": {
-      focus: "Financial Services, Enterprise IT & Digital Media",
-      keySkills: ["SQL", "React", "Data Analysis", "JavaScript"],
-      status: "Services & Financial Capital"
+    "Gurugram": {
+      focus: "High-Scale E-Commerce, Quick Commerce & Event-Driven Systems",
+      keySkills: ["Java", "Spring Boot", "Kafka", "Redis", "System Design & Microservices"],
+      tier: "Tier-1 Product & Startup Engineering Hub"
     },
-    "Mumbai Suburban": {
-      focus: "Analytics, Logistics & Software Development",
-      keySkills: ["Data Analysis", "Python", "Cloud Computing"],
-      status: "High Demand Density"
+    "Noida": {
+      focus: "FinTech, Payments Systems & Modern Frontend Engineering",
+      keySkills: ["React", "Next.js", "TypeScript", "Node.js", "REST APIs"],
+      tier: "Tier-1 Software Development Hub"
     },
-    "Nashik": {
-      focus: "Automotive Component Manufacturing & Electrical",
-      keySkills: ["Industrial Wiring", "PLC Programming", "Quality Control"],
-      status: "Manufacturing Corridor"
+    "Chennai": {
+      focus: "Multi-Tenant SaaS Engineering, Deep Tech & Enterprise Infrastructure",
+      keySkills: ["Java", "PostgreSQL", "React", "REST APIs", "Cloud Computing"],
+      tier: "Tier-1 Global SaaS Capital"
     },
-    "Nagpur": {
-      focus: "Logistics Hub, Multimodal Cargo & Heavy Engineering",
-      keySkills: ["Logistics", "Electrical Maintenance", "Supply Chain"],
-      status: "Central Logistics Gateway"
-    },
-    "Chhatrapati Sambhajinagar": {
-      focus: "Industrial Automation, Metallurgy & Machine Tooling",
-      keySkills: ["PLC Programming", "Industrial Automation", "Welding"],
-      status: "Emerging Automation Zone"
+    "Mumbai": {
+      focus: "FinTech Banking Platforms, Enterprise IT Services & Analytics",
+      keySkills: ["Java", "Spring Boot", "Data Analysis", "SQL", "Cloud Computing"],
+      tier: "Tier-1 Financial Technology Gateway"
     }
   };
 
@@ -63,17 +68,17 @@ export function DistrictIntelTab() {
         <div className="sp-card-header">
           <div className="sp-card-title">
             <MapPin size={20} className="text-amber" />
-            Maharashtra District-Level Workforce Intelligence (PRD Module 4)
+            India Tech Hub Hiring Telemetry & Academic Specialization (PRD Module 4)
           </div>
-          <span className="sp-tag sp-tag-amber">Spatial Demand Telemetry</span>
+          <span className="sp-tag sp-tag-amber">Spatial Tech Demand Telemetry</span>
         </div>
         <p className="sp-card-desc">
-          Geographically attributed workforce demand across Maharashtra districts. Helps state planners avoid generic curriculum policies by tailoring vocational training to local industrial clusters.
+          Geographically attributed software engineering demand across India's premier tech hiring clusters. Helps university academic councils and placement cells align regional elective offerings with city-level hiring stacks.
         </p>
       </div>
 
       {loading ? (
-        <div className="sp-loading-spinner">Loading district workforce telemetry...</div>
+        <div className="sp-loading-spinner">Loading tech hub hiring telemetry...</div>
       ) : (
         <div className="sp-grid-2">
           {/* Active Demand Clusters */}
@@ -81,16 +86,16 @@ export function DistrictIntelTab() {
             <div className="sp-card-header">
               <div className="sp-card-title">
                 <BarChart3 size={18} className="text-blue" />
-                Active District Demand Rankings
+                Active Tech Hub Hiring Volume
               </div>
             </div>
 
             <div className="sp-district-rankings">
               {districts.map((d, idx) => {
-                const profile = districtProfiles[d.district] || {
-                  focus: "General Regional Industries",
-                  keySkills: ["Technical Basics", "Safety"],
-                  status: "Developing Cluster"
+                const profile = techHubProfiles[d.district] || {
+                  focus: "General IT Services & Digital Engineering",
+                  keySkills: ["Java", "SQL", "Python", "Git"],
+                  tier: "Emerging Tech Hub"
                 };
 
                 return (
@@ -110,7 +115,7 @@ export function DistrictIntelTab() {
                     </div>
 
                     <div className="sp-dist-skills">
-                      <span className="sp-dist-skills-label">Top Skills:</span>
+                      <span className="sp-dist-skills-label">Dominant Stacks:</span>
                       <div className="sp-pill-group">
                         {profile.keySkills.map((sk, sidx) => (
                           <span key={sidx} className="sp-dist-skill-pill">
@@ -125,37 +130,37 @@ export function DistrictIntelTab() {
             </div>
           </div>
 
-          {/* Regional Policy & Shortage Insights */}
+          {/* Regional Academic & Placement Insights */}
           <div className="sp-card">
             <div className="sp-card-header">
               <div className="sp-card-title">
                 <TrendingUp size={18} className="text-emerald" />
-                District Skill Shortage & Policy Advisory
+                Graduate Placement & Academic Specialization Insights
               </div>
             </div>
 
             <div className="sp-policy-insights">
               <div className="sp-insight-item">
-                <div className="sp-insight-badge blue">Pune Cluster</div>
-                <h4>Automotive to Mechatronics Shift</h4>
+                <div className="sp-insight-badge blue">Bengaluru Cluster</div>
+                <h4>High-Scale Microservices & Generative AI</h4>
                 <p>
-                  Severe shortage of candidates combining mechanical machining with software automation (PLC & Python). Recommended: Modernize ITI Fitter trades with 20% automation lab hours.
+                  High hiring premium for graduating engineers who understand asynchronous architectures (Go/FastAPI), vector retrieval (RAG), and Kubernetes container deployments over legacy monoliths.
                 </p>
               </div>
 
               <div className="sp-insight-item">
-                <div className="sp-insight-badge amber">Nagpur Multi-Modal Zone</div>
-                <h4>Logistics & Automated Warehousing</h4>
+                <div className="sp-insight-badge amber">Hyderabad & Pune Corridor</div>
+                <h4>Cloud Native & DevSecOps</h4>
                 <p>
-                  High influx of logistics hubs around MIHAN corridor. Local ITIs lack modern supply chain inventory management certifications. Recommended: Introduce specialized 6-month Logistics Operator courses.
+                  Accelerated hiring for enterprise cloud migrations. Colleges in these regions should mandate Docker and automated CI/CD lab exercises in 6th semester Computer Networks and Cloud electives.
                 </p>
               </div>
 
               <div className="sp-insight-item">
-                <div className="sp-insight-badge purple">Nashik & Sambhajinagar</div>
-                <h4>Industrial Safety (OSHA) & Smart Wiring</h4>
+                <div className="sp-insight-badge purple">Gurugram & Noida Zone</div>
+                <h4>Event Streaming & High-Availability Databases</h4>
                 <p>
-                  Tier-1 tier automotive suppliers require ISO/OSHA certified electrical technicians. Traditional electrician courses teach domestic wiring; urgent upgrade needed for industrial panel wiring.
+                  Consumer tech unicorns (Zomato, Blinkit, Paytm) prioritize engineers proficient with message queues (Kafka), distributed cache invalidation (Redis), and PostgreSQL indexing.
                 </p>
               </div>
             </div>

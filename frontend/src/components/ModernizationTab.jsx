@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../services/api";
-import { Sparkles, Check, X, BookOpen, Clock, Target, Layers } from "lucide-react";
+import { Sparkles, Check, X, BookOpen, Target, Layers, GraduationCap } from "lucide-react";
 
 export function ModernizationTab() {
   const [recommendations, setRecommendations] = useState([]);
@@ -41,8 +41,8 @@ export function ModernizationTab() {
       <div className="sp-card">
         <div className="sp-card-header">
           <div className="sp-card-title">
-            <Sparkles size={20} className="text-purple" />
-            Curriculum Modernization & Approval Hub (PRD Module 3)
+            <GraduationCap size={20} className="text-purple" />
+            Board of Studies (BoS) Curriculum Modernization Portal (PRD Module 3)
           </div>
           <div className="sp-filter-bar">
             <select
@@ -51,24 +51,24 @@ export function ModernizationTab() {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="">All Review Statuses</option>
-              <option value="PENDING">Pending Review</option>
-              <option value="APPROVED">Approved for Rollout</option>
+              <option value="PENDING">Pending Faculty Review</option>
+              <option value="APPROVED">Approved for Syllabus Rollout</option>
               <option value="REJECTED">Archived / Rejected</option>
             </select>
           </div>
         </div>
         <p className="sp-card-desc">
-          Automated syllabus modernisation units synthesized from detected industry skill deficits. Authorized administrators and institutional heads can review, approve, or reject proposed units.
+          Evidence-backed curriculum modernisation proposals synthesized from detected software industry skill deficits. Board of Studies (BoS) members, university faculty, and academic directors can review, endorse, or archive proposed laboratory modules and theory units.
         </p>
       </div>
 
       {loading ? (
-        <div className="sp-loading-spinner">Loading curriculum recommendations...</div>
+        <div className="sp-loading-spinner">Loading BoS curriculum modernization proposals...</div>
       ) : recommendations.length === 0 ? (
         <div className="sp-card sp-empty-card">
           <BookOpen size={40} className="sp-empty-icon" />
-          <h3>No Recommendations Found</h3>
-          <p>Run a Skill Gap Audit first to generate evidence-backed curriculum improvements.</p>
+          <h3>No Curriculum Proposals Available</h3>
+          <p>Run a Curriculum Gap Audit on a university syllabus to generate actionable modernization units.</p>
         </div>
       ) : (
         <div className="sp-recs-grid">
@@ -81,29 +81,29 @@ export function ModernizationTab() {
                       {rec.priority} Priority
                     </span>
                     <span className={`sp-status-pill-badge ${rec.status.toLowerCase()}`}>
-                      {rec.status}
+                      {rec.status === "APPROVED" ? "BoS Approved" : rec.status}
                     </span>
                   </div>
-                  <h3 className="sp-rec-title">{rec.topic_title || "Proposed Course Module"}</h3>
+                  <h3 className="sp-rec-title">{rec.topic_title || "Proposed Academic Module"}</h3>
                 </div>
 
                 <div className="sp-rec-actions">
                   {rec.status !== "APPROVED" && (
                     <button
                       className="sp-btn-action approve"
-                      title="Approve for Course Syllabus"
+                      title="Endorse for University Syllabus (BoS)"
                       onClick={() => handleStatusChange(rec.id, "APPROVED")}
                     >
-                      <Check size={16} /> Approve
+                      <Check size={16} /> Approve (BoS)
                     </button>
                   )}
                   {rec.status !== "REJECTED" && (
                     <button
                       className="sp-btn-action reject"
-                      title="Reject Proposal"
+                      title="Archive / Reject Proposal"
                       onClick={() => handleStatusChange(rec.id, "REJECTED")}
                     >
-                      <X size={16} /> Reject
+                      <X size={16} /> Archive
                     </button>
                   )}
                 </div>
@@ -111,11 +111,11 @@ export function ModernizationTab() {
 
               <p className="sp-rec-desc">{rec.recommendation_text}</p>
 
-              {/* Learning Outcomes */}
+              {/* Measurable Learning Outcomes */}
               {rec.learning_outcomes && rec.learning_outcomes.length > 0 && (
                 <div className="sp-rec-section">
                   <div className="sp-rec-sec-title">
-                    <Target size={14} /> Measurable Learning Outcomes:
+                    <Target size={14} /> Course Outcomes (COs) & Measurable Objectives:
                   </div>
                   <ul className="sp-rec-list">
                     {rec.learning_outcomes.map((lo, idx) => (
@@ -125,11 +125,11 @@ export function ModernizationTab() {
                 </div>
               )}
 
-              {/* Practical Exercises */}
+              {/* Practical Hands-on Exercises */}
               {rec.practical_exercises && rec.practical_exercises.length > 0 && (
                 <div className="sp-rec-section">
                   <div className="sp-rec-sec-title">
-                    <Layers size={14} /> Practical Workshop & Lab Exercises:
+                    <Layers size={14} /> Laboratory Curriculum & Hands-on Workshop Assignments:
                   </div>
                   <ul className="sp-rec-list">
                     {rec.practical_exercises.map((pe, idx) => (
@@ -142,7 +142,7 @@ export function ModernizationTab() {
               {/* Evidence Rationale */}
               {rec.rationale && (
                 <div className="sp-rec-rationale">
-                  <strong>Market Evidence:</strong> {rec.rationale}
+                  <strong>Academic & Industry Evidence:</strong> {rec.rationale}
                 </div>
               )}
             </div>

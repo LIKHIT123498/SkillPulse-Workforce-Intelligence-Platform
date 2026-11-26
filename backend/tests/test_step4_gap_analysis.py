@@ -1,27 +1,29 @@
 from fastapi.testclient import TestClient
 from app.main import app
+import io
+import pypdf
 
 client = TestClient(app)
 
-def test_skill_gap_analysis_copa_vs_python_dev():
-    # Retrieve courses first to get COPA course ID
+def test_vtu_cse_vs_senior_backend_engineer():
     res_courses = client.get("/api/v1/courses")
     assert res_courses.status_code == 200
     courses = res_courses.json()
     assert len(courses) > 0
-    copa_course = next((c for c in courses if "COPA" in c["course_name"] or "Computer" in c["course_name"]), courses[0])
-    course_id = copa_course["id"]
+    
+    # Pick VTU or Computer Science course
+    target_course = next((c for c in courses if "VTU" in c["course_name"] or "Software Engineering" in c["course_name"]), courses[0])
+    course_id = target_course["id"]
 
-    # Post skill gap analysis
     payload = {
         "course_id": course_id,
-        "target_role": "Junior Python Developer"
+        "target_role": "Senior Backend Engineer"
     }
     res = client.post("/api/v1/analysis/skill-gap", json=payload)
     assert res.status_code == 200, res.text
     report = res.json()
 
-    print(f"✓ Skill Gap Analysis generated for '{copa_course['course_name']}' vs 'Junior Python Developer'")
+    print(f"✓ B.Tech CSE Gap Analysis generated for '{target_course['course_name']}' vs 'Senior Backend Engineer'")
     print(f"  - Alignment Score: {report['alignment_score']}%")
     print(f"  - Covered Skills: {[s['canonical_name'] for s in report['covered_skills']]}")
     print(f"  - Missing Skills: {[s['canonical_name'] for s in report['missing_skills']]}")
@@ -29,7 +31,7 @@ def test_skill_gap_analysis_copa_vs_python_dev():
     assert report["alignment_score"] >= 0.0 and report["alignment_score"] <= 100.0
     assert report["total_required_skills"] > 0
     assert len(report["recommendations"]) > 0
-    print(f"  - Auto-generated Recommendations: {len(report['recommendations'])}")
+    print(f"  - BoS Curriculum Recommendations: {len(report['recommendations'])}")
 
     report_id = report["id"]
 
@@ -39,43 +41,42 @@ def test_skill_gap_analysis_copa_vs_python_dev():
     assert res_get.json()["id"] == report_id
     print("✓ GET /api/v1/analysis/{id} verified successfully")
 
-    # Test recommendations listing
+    # Test BoS recommendations listing & approval
     res_recs = client.get(f"/api/v1/recommendations?course_id={course_id}")
     assert res_recs.status_code == 200
     recs = res_recs.json()
     assert len(recs) > 0
     first_rec = recs[0]
     rec_id = first_rec["id"]
-    print(f"✓ Curriculum Modernization Proposal: '{first_rec['topic_title']}' [Priority: {first_rec['priority']}]")
-    print(f"  - Learning Outcomes: {len(first_rec['learning_outcomes'])} outcomes defined")
-    print(f"  - Practical Exercises: {len(first_rec['practical_exercises'])} exercises defined")
-    print(f"  - Evidence Rationale: {first_rec['rationale']}")
+    print(f"✓ Board of Studies Proposal: '{first_rec['topic_title']}' [Priority: {first_rec['priority']}]")
 
-    # Test PATCH recommendation status (Admin approval workflow)
+    # Faculty BoS Approval
     patch_payload = {"status": "APPROVED"}
     res_patch = client.patch(f"/api/v1/recommendations/{rec_id}", json=patch_payload)
     assert res_patch.status_code == 200
     assert res_patch.json()["status"] == "APPROVED"
-    print(f"✓ PATCH /api/v1/recommendations/{rec_id} status updated to APPROVED")
+    print(f"✓ PATCH /api/v1/recommendations/{rec_id} status updated to APPROVED by BoS")
 
-def test_machinist_vs_cnc_operator():
-    res_courses = client.get("/api/v1/courses")
-    courses = res_courses.json()
-    machinist_course = next((c for c in courses if "Machinist" in c["course_name"] or "CNC" in c["course_name"]), courses[0])
+def test_syllabus_pdf_import():
+    # Build a simulated syllabus PDF in memory
+    writer = pypdf.PdfWriter()
+    writer.add_blank_page(width=612, height=792)
+    
+    pdf_bytes = io.BytesIO()
+    writer.write(pdf_bytes)
+    pdf_bytes.seek(0)
 
-    payload = {
-        "course_id": machinist_course["id"],
-        "target_role": "CNC Milling Machine Operator"
-    }
-    res = client.post("/api/v1/analysis/skill-gap", json=payload)
-    assert res.status_code == 200
-    report = res.json()
-    print(f"✓ Industrial Trade Skill Gap: '{machinist_course['course_name']}' vs 'CNC Milling Operator'")
-    print(f"  - Alignment Score: {report['alignment_score']}%")
-    print(f"  - Covered Skills: {[s['canonical_name'] for s in report['covered_skills']]}")
-    assert report["alignment_score"] > 0.0
+    res = client.post(
+        "/api/v1/courses/import-pdf",
+        files={"file": ("vtu_bcs601_cloud_native.pdf", pdf_bytes, "application/pdf")},
+        data={"institution": "Visvesvaraya Technological University (VTU)", "qualification": "B.Tech CSE Semester VI"}
+    )
+    assert res.status_code == 200, res.text
+    data = res.json()
+    assert "course_id" in data
+    print(f"✓ PDF Syllabus Ingestion verified: '{data['course_name']}' created via PDF upload")
 
 if __name__ == "__main__":
-    test_skill_gap_analysis_copa_vs_python_dev()
-    test_machinist_vs_cnc_operator()
-    print("\n🎉 ALL STEP 4 (SKILL GAP ANALYSIS & RECOMMENDATION ENGINE) TESTS PASSED SUCCESSFULLY!")
+    test_vtu_cse_vs_senior_backend_engineer()
+    test_syllabus_pdf_import()
+    print("\n🎉 ALL BTECH CSE SKILL GAP & SYLLABUS PDF TESTS PASSED SUCCESSFULLY!")

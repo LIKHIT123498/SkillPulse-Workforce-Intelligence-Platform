@@ -55,10 +55,25 @@ export const api = {
     body: JSON.stringify({ text })
   }),
 
-  // Courses
+  // Courses & Syllabus PDF Parser
   getCourses: () => request("/courses"),
+  importSyllabusPdf: async (file, institution = "Technical University", qualification = "B.Tech CSE") => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("institution", institution);
+    formData.append("qualification", qualification);
+    const res = await fetch(`${API_BASE}/courses/import-pdf`, {
+      method: "POST",
+      body: formData
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: "PDF Upload failed" }));
+      throw new Error(err.detail || "Failed to parse syllabus PDF");
+    }
+    return await res.json();
+  },
 
-  // Districts
+  // Districts / Tech Hubs
   getDistricts: () => request("/districts"),
 
   // Skill Gap Analysis

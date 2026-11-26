@@ -1,15 +1,16 @@
-# SkillPulse – Workforce Intelligence Platform
+# SkillPulse Academic – B.Tech CSE Curriculum & Tech Talent Intelligence Platform
 
 <p align="center">
-  <strong>AI-Powered Labour Market Intelligence & Curriculum Alignment Platform</strong><br>
-  <em>Addressing SIH Problem Statement 26134: Challenges in aligning skill development programs with industry requirements and emerging job market demands.</em>
+  <strong>AI-Powered Engineering Syllabus Audit, Skill Gap Detection & Tech Hiring Intelligence</strong><br>
+  <em>Aligning University B.Tech Computer Science Syllabi (VTU, Mumbai Univ, SPPU, AKTU) with Real-World Industry Requirements across India's Premier Tech Hubs.</em>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/SIH%20Problem%20Statement-26134-blue?style=for-the-badge" alt="SIH 26134" />
-  <img src="https://img.shields.io/badge/Govt.%20of%20Maharashtra-MSInS%20%26%20DSEED-orange?style=for-the-badge" alt="Maharashtra Govt" />
+  <img src="https://img.shields.io/badge/Domain-B.Tech%20CSE%20Curriculum%20Intelligence-blue?style=for-the-badge" alt="Domain" />
+  <img src="https://img.shields.io/badge/Tech%20Hubs-Bengaluru%20%7C%20Hyderabad%20%7C%20Pune%20%7C%20NCR-orange?style=for-the-badge" alt="Tech Hubs" />
   <img src="https://img.shields.io/badge/FastAPI-0.163+-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
   <img src="https://img.shields.io/badge/React%2019-Vite%20%2B%20TypeScript-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/PyPDF%20%26%20NLP-Hybrid%20Matcher-purple?style=for-the-badge" alt="NLP" />
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
 </p>
 
@@ -17,188 +18,121 @@
 
 ## 1. Executive Summary & Problem Context
 
-In traditional vocational and educational ecosystems (such as ITIs, polytechnics, and state skill universities), curriculum revisions occur on multi-year cycles. Conversely, industry skill requirements evolve on quarterly cycles driven by advancements in artificial intelligence, cloud architectures, industrial automation, and modern manufacturing.
+In Indian engineering universities (VTU, Mumbai University, SPPU Pune, AKTU, JNTU, and autonomous institutes), academic curricula are revised on multi-year cycles. Conversely, software industry stacks evolve quarterly—driven by rapid shifts toward cloud-native microservices, containerization, asynchronous architectures, and Generative AI / LLM engineering.
 
-This lag creates a structural employability deficit:
-1. **Curriculum Lag:** Syllabi teach outdated tooling while employers search for modern competencies.
-2. **The "Black Box" Gap:** Training institutions lack mathematical, explainable metrics identifying *which exact topics* are missing from their courses.
-3. **Spatial Demand Mismatch:** Industrial demand varies dramatically by district (e.g., Automotive & AI in Pune vs. Multimodal Logistics in Nagpur vs. Precision Tooling in Nashik). State planners lack continuous, localized telemetry to allocate training funds effectively.
+This creates a critical employability deficit:
+1. **Curriculum Lag:** Syllabi emphasize theoretical models while tech companies search for Docker, Kubernetes, Next.js, FastAPI, Redis, Kafka, and RAG systems.
+2. **The "Black Box" Gap:** Board of Studies (BoS) faculty lack mathematical, explainable metrics identifying *which exact topics and lab exercises* are missing from their courses.
+3. **Spatial Demand Mismatch:** Software hiring stacks vary by city (e.g., High-Throughput Microservices & GenAI in Bengaluru vs. Enterprise Cloud in Hyderabad vs. Product Consulting in Pune). Engineering colleges lack localized telemetry to guide department electives.
 
-### The Solution: SkillPulse
-**SkillPulse** is an end-to-end evidence-based workforce intelligence system. It continuously ingests real-world job demand signals, extracts skills via NLP, performs deterministic weighted competency gap analysis against existing syllabi, and generates actionable, modular curriculum modernizations.
+### The Solution: SkillPulse Academic
+**SkillPulse Academic** is an end-to-end curriculum intelligence and talent readiness platform:
+* **Automated Syllabus PDF Parser:** Ingests official university syllabus PDFs, extracts Course Outcomes (COs) and module outlines, and auto-populates taught competencies.
+* **Hybrid Skill Extraction:** Combines word-boundary regex matching with conceptual semantic patterns.
+* **Deterministic Weighted Gap Scoring:** Computes exact, mathematical alignment percentages for any university course vs. industry benchmarks.
+* **Board of Studies (BoS) Modernization Hub:** Formulates modular syllabus modernization units with measurable Bloom's learning outcomes, practical lab exercises, and one-click faculty endorsement.
+* **India Tech Hub Telemetry:** Compares hiring volume and tech stack preferences across Bengaluru, Hyderabad, Pune, Gurugram, Noida, Chennai, and Mumbai.
 
-$$\text{Industry Demand Postings} \longrightarrow \text{NLP Skill Extraction} \longrightarrow \text{Weighted Gap Analysis} \longrightarrow \text{Curriculum Modernization} \longrightarrow \text{District Telemetry}$$
+$$\text{Tech Postings} \longrightarrow \text{Syllabus PDF Ingestion} \longrightarrow \text{Hybrid Gap Engine} \longrightarrow \text{BoS Modernization} \longrightarrow \text{Tech Hub Telemetry}$$
 
 ---
 
-## 2. High-Level System Architecture
+## 2. System Architecture
 
 ```mermaid
 flowchart TD
-    subgraph DataIngestion ["Data Ingestion & Extraction"]
-        RawCSV["Raw Job Postings (CSV / API)"] --> Preprocessor["Text Preprocessor (HTML & Noise Cleaning)"]
-        Preprocessor --> NLPExtractor["NLP Skill Matcher (Word-boundary Regex & n-grams)"]
-        NLPExtractor --> Normalizer["Skill Normalizer (Canonical Taxonomy Graph)"]
+    subgraph Ingestion ["Ingestion & Parsing Layer"]
+        PDF["University Syllabus PDF (VTU / Mumbai / AKTU)"] --> PDFParser["Syllabus PDF Parser (pypdf + Module Splitter)"]
+        Jobs["Tech Postings (Bengaluru / Hyd / Pune / NCR)"] --> Preprocessor["Text Preprocessor (Noise Cleaning)"]
+        PDFParser --> HybridMatcher["Hybrid NLP Matcher (Word-boundary + Conceptual)"]
+        Preprocessor --> HybridMatcher
+        HybridMatcher --> Normalizer["Skill Normalizer (Canonical Tech Taxonomy)"]
     end
 
-    subgraph CoreEngine ["Deterministic Intelligence Core"]
-        Normalizer --> DemandAnalytics["Demand & Sector Aggregator"]
-        CourseDB[("Curricula & Course DB")] --> GapEngine["Weighted Skill Gap Analyzer"]
+    subgraph CoreEngine ["Intelligence & Analytics Core"]
+        Normalizer --> DemandAnalytics["Tech Hub & Sector Aggregator"]
+        CourseDB[("University Curricula DB")] --> GapEngine["Deterministic Weighted Gap Engine"]
         DemandAnalytics --> GapEngine
-        GapEngine --> RecEngine["Curriculum Modernization Engine"]
+        GapEngine --> BoSEngine["Board of Studies (BoS) Modernization Engine"]
     end
 
-    subgraph Storage ["Persistence Layer (PostgreSQL / SQLite)"]
-        GapEngine --> DB[("Relational Database")]
-        RecEngine --> DB
+    subgraph Storage ["Relational Persistence Layer"]
+        GapEngine --> DB[("PostgreSQL / SQLite Database")]
+        BoSEngine --> DB
     end
 
-    subgraph Presentation ["GovTech React Dashboard"]
-        DB --> OverviewUI["Overview Dashboard (KPIs & Trends)"]
-        DB --> MarketUI["Labour Market Intel & Live NLP Tester"]
-        DB --> GapUI["Skill Gap Analyzer Studio"]
-        DB --> ModernUI["Curriculum Modernization Hub (Approve/Reject)"]
-        DB --> DistrictUI["Maharashtra District Intelligence Map"]
+    subgraph Presentation ["Academic & Faculty React Dashboard"]
+        DB --> OverviewUI["Overview Dashboard (Tech KPIs & Trends)"]
+        DB --> MarketUI["Tech Market Intel & Live NLP Playground"]
+        DB --> GapUI["Curriculum Gap Audit (PDF Upload + Alignment Ring)"]
+        DB --> BoSUI["Board of Studies Review (Approve/Reject Units)"]
+        DB --> HubsUI["India Tech Hub Telemetry (Bengaluru, Hyd, Pune)"]
     end
 ```
 
 ---
 
-## 3. Entity-Relationship (ER) Architecture
+## 3. Key Functional Capabilities
 
-The platform uses a relational data model with 15 interconnected entities supporting all stakeholders:
+### A. Automated University Syllabus PDF Parser (`POST /api/v1/courses/import-pdf`)
+* Allows faculty and students to upload official university syllabus PDFs.
+* Automatically extracts Course Codes (e.g. `BCS501`, `CSC602`), Course Outcomes (`CO1`, `CO2`), and module topics.
+* Runs hybrid skill extraction across syllabus text to instantly populate the `CourseSkill` database.
 
-```mermaid
-erDiagram
-    DISTRICTS ||--o{ JOB_POSTINGS : "located in"
-    DISTRICTS ||--o{ COURSES : "hosted in"
-    DISTRICTS ||--o{ CANDIDATE_PROFILES : "resides in"
-    
-    INDUSTRIES ||--o{ COMPANIES : "categorizes"
-    COMPANIES ||--o{ JOB_POSTINGS : "publishes"
-    
-    JOB_POSTINGS ||--o{ JOB_SKILLS : "requires"
-    SKILLS ||--o{ JOB_SKILLS : "maps"
-    
-    COURSES ||--o{ COURSE_SKILLS : "teaches"
-    SKILLS ||--o{ COURSE_SKILLS : "maps"
-    
-    COURSES ||--o{ SKILL_GAP_REPORTS : "audited in"
-    SKILL_GAP_REPORTS ||--o{ RECOMMENDATIONS : "generates"
-    SKILLS ||--o{ RECOMMENDATIONS : "targets"
-    
-    USERS ||--o{ EMPLOYER_SURVEYS : "submits"
-    USERS ||--o{ CANDIDATE_PROFILES : "profile of"
-```
+### B. Hybrid Skill Extraction & Tech Taxonomy
+* **Strict Word-Boundary Regex:** Eliminates false positives (`C` vs `CSS`, `Go` vs `Good`, `Java` vs `JavaScript`).
+* **Conceptual Semantic Mapping:** Maps academic textbook phrasing to industry competencies:
+  * *"Distributed consensus, virtualization, hypervisor"* $\to$ **Cloud Computing & Distributed Systems**
+  * *"ACID transactions, B+ trees, relational algebra, 3NF"* $\to$ **Database Management Systems**
+  * *"TCP/IP stack, sliding window, routing, socket programming"* $\to$ **Computer Networks**
+  * *"Process synchronization, virtual memory, paging, deadlock"* $\to$ **Operating Systems**
+  * *"Supervised regression, gradient descent, backpropagation"* $\to$ **Machine Learning**
+* **Canonical Software Taxonomy:** Maps modern software tools (`Next.js`, `FastAPI`, `Docker`, `Kubernetes`, `PostgreSQL`, `Kafka`, `Redis`, `PyTorch`, `Generative AI & LLMs`, `RAG Systems`).
 
----
+### C. Deterministic Weighted Skill Gap Analysis
+* Mathematical Alignment Score:
+  $$\text{Skill Alignment Score} = \left(\frac{\sum \text{Covered Weighted Points}}{\sum \text{Total Required Weighted Points}}\right) \times 100$$
+* Competency breakdown into **Covered** (100% weight), **Partially Covered** (50% weight), and **Missing** (0% weight).
 
-## 4. Key Functional Modules
+### D. Board of Studies (BoS) Modernization Portal
+* Auto-synthesizes ready-to-adopt syllabus units for detected gaps.
+* Formulates measurable **Course Outcomes (COs)**, hands-on **Laboratory Exercises**, and **Market Evidence Rationale**.
+* Provides faculty endorsement actions: **Approve (BoS)** or **Archive / Reject**.
 
-### Module 1: Labour Market Intelligence & CSV Ingestion (`PRD FR-101 – FR-107`)
-* Ingests structured and unstructured job records via CSV upload or REST API.
-* Normalizes district geographical attributes across all 36 Maharashtra districts.
-* Retains raw job descriptions for auditability and NLP traceability.
-
-### Module 2: NLP Entity Preprocessing & Taxonomy Normalization (`PRD Section 6.4`)
-* **Text Preprocessor:** Strips HTML noise, standardizes unicode bullets, and segments job postings into `requirements`, `responsibilities`, and `preferred` sections.
-* **Skill Matcher:** Word-boundary phrase matching prevents false positives (e.g. `C` vs `CSS`, `Java` vs `JavaScript`).
-* **Canonical Normalization:** Maps variations, acronyms, and aliases to standard taxonomy nodes (`py` $\to$ `Python`, `k8s` $\to$ `Kubernetes`, `vmc` $\to$ `CNC Machining`, `tig welding` $\to$ `Welding`).
-
-### Module 3: Deterministic Weighted Skill Gap Analysis (`PRD Module 2`)
-* Evaluates competencies required by live industry postings against course syllabi.
-* Computes the mathematical **Skill Alignment Score**:
-  $$\text{Skill Alignment Score} = \left(\frac{\sum \text{Weighted Covered Skills}}{\sum \text{Total Weighted Required Skills}}\right) \times 100$$
-* Categorizes every required competency into **Covered** (100% weight), **Partially Covered** (50% weight), or **Missing** (0% weight).
-
-### Module 4: Curriculum Recommendation Engine (`PRD Module 3`)
-* Transforms missing competencies into modular syllabus upgrade units.
-* Formulates specific measurable **Learning Outcomes** (Bloom's taxonomy), practical workshop/lab exercises, priority levels (`HIGH`, `MEDIUM`, `LOW`), and evidence-backed rationale.
-* Includes state administrator approval workflow (`PENDING` $\to$ `APPROVED` or `REJECTED`).
-
-### Module 5: Maharashtra District Intelligence (`PRD Module 4`)
-* Ranks and visualizes spatial demand clusters (Pune, Mumbai, Nagpur, Nashik, Chhatrapati Sambhajinagar).
-* Highlights localized skill deficits to prevent course oversupply and guide public fund allocation.
+### E. India Tech Hub Hiring Telemetry
+* Analyzes software engineering job postings across Bengaluru, Hyderabad, Pune, Gurugram, Noida, Chennai, and Mumbai.
+* Provides city-level stack preferences to guide elective planning and placement training.
 
 ---
 
-## 5. Technology Stack
+## 4. REST API Reference
 
-| Layer | Technology | Purpose |
+| Method | Endpoint | Description |
 |---|---|---|
-| **Backend Framework** | Python 3.12+, FastAPI | Asynchronous REST API, high performance |
-| **Data Validation** | Pydantic v2, Pydantic-Settings | Request/response schema contracts |
-| **Persistence** | SQLAlchemy 2.0 (PostgreSQL / SQLite) | ORM models, migrations, relationship mapping |
-| **NLP & Extraction** | Python Regex, n-grams, Difflib, spaCy | Noise cleaning, phrase matching, fuzzy aliases |
-| **Frontend UI** | React 19, TypeScript, Vite | Fast, modern client application |
-| **UI Styling** | Custom GovTech Design System (CSS3) | Accessible, responsive government dashboard |
-| **Icons & Visuals** | Lucide-React | Scalable UI icons |
-| **Package Tooling** | `uv` (Python), `npm` (Node.js) | Lightning-fast dependency management |
+| `GET` | `/api/v1/health` | Live engine and database connectivity healthcheck |
+| `GET` | `/api/v1/analytics/overview` | Platform-level KPIs (jobs, unique skills, tech hub coverage) |
+| `GET` | `/api/v1/analytics/skills` | Skill-demand counts categorized by tech domain |
+| `GET` | `/api/v1/analytics/districts` | Spatial demand across Indian Tech Hubs (Bengaluru, Hyd, Pune, etc.) |
+| `POST` | `/api/v1/jobs/import` | Ingest tech job dataset from CSV |
+| `GET` | `/api/v1/jobs` | Retrieve paginated tech postings (filter by `sector`, `district_id`) |
+| `GET` | `/api/v1/skills` | Retrieve canonical software taxonomy |
+| `POST` | `/api/v1/skills/extract` | Extract canonical tech skills on-the-fly from unstructured text |
+| `GET` | `/api/v1/courses` | Retrieve university syllabi with covered competencies |
+| `POST` | `/api/v1/courses` | Manually register course syllabus |
+| `POST` | `/api/v1/courses/import-pdf` | **Upload university syllabus PDF** for automated parsing & mapping |
+| `POST` | `/api/v1/analysis/skill-gap` | Compute weighted skill alignment score for course vs. role |
+| `GET` | `/api/v1/analysis/{id}` | Retrieve historical gap audit report |
+| `GET` | `/api/v1/recommendations` | Retrieve BoS modernization proposals (filter by `status`, `course_id`) |
+| `PATCH`| `/api/v1/recommendations/{id}`| Update BoS approval status (`PENDING`, `APPROVED`, `REJECTED`) |
 
 ---
 
-## 6. Project Structure
-
-```text
-SkillPulse/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                  # Lifespan startup, CORS, healthcheck, route mounting
-│   │   ├── core/
-│   │   │   └── config.py            # Environment settings (DATABASE_URL, API_V1_STR)
-│   │   ├── database/
-│   │   │   ├── session.py           # SQLAlchemy engine & session factory
-│   │   │   └── seed.py              # Pre-populates Maharashtra districts, skills, courses
-│   │   ├── models/                  # 15 ORM models (location, skill, job, course, gap_analysis, stakeholder)
-│   │   ├── schemas/                 # Pydantic v2 request/response schemas
-│   │   ├── ml/
-│   │   │   ├── nlp_pipeline.py      # Text preprocessing & section segmentation
-│   │   │   └── skill_matcher.py     # Word-boundary phrase extractor
-│   │   ├── services/
-│   │   │   ├── job_ingestion.py     # CSV parsing & skill linking
-│   │   │   ├── skill_normalization.py# Taxonomy synonym dictionary
-│   │   │   ├── gap_analysis.py      # Deterministic weighted alignment engine
-│   │   │   ├── curriculum_engine.py # Actionable syllabus upgrade generator
-│   │   │   └── analytics.py         # Demand frequency & district telemetry
-│   │   └── api/v1/                  # REST endpoints (jobs, skills, courses, districts, analytics, analysis, recs)
-│   ├── tests/
-│   │   ├── test_step2.py            # Database, seeding, and CSV ingestion tests
-│   │   ├── test_nlp_pipeline.py     # NLP preprocessing, extraction & analytics tests
-│   │   └── test_step4_gap_analysis.py# Gap analysis & recommendation engine tests
-│   └── pyproject.toml
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx           # Maharashtra branding, live connection pill, tab navigation
-│   │   │   ├── OverviewTab.jsx      # High-level KPIs, demand progress bars, sector distributions
-│   │   │   ├── LabourMarketTab.jsx  # Job directory & Live NLP Extraction Playground
-│   │   │   ├── SkillGapTab.jsx      # Course vs. role audit matrix & visual alignment gauge
-│   │   │   ├── ModernizationTab.jsx # Syllabus units with 1-click Approve/Reject actions
-│   │   │   └── DistrictIntelTab.jsx # Maharashtra spatial demand & shortage advisories
-│   │   ├── services/
-│   │   │   └── api.js               # Centralized API client
-│   │   ├── App.jsx                  # Main application container & status poller
-│   │   └── App.css                  # Professional GovTech responsive styling
-│   ├── package.json
-│   └── vite.config.js
-│
-├── datasets/
-│   └── sample_jobs_maharashtra.csv  # Verified Maharashtra job postings dataset
-├── PRD/
-│   └── PRD.txt                      # Complete Product Requirements Document
-├── .gitignore
-└── README.md
-```
-
----
-
-## 7. Local Setup & Quick Start
+## 5. Local Setup & Quick Start
 
 ### Prerequisites
 * **Python:** 3.12 or higher (`uv` recommended)
 * **Node.js:** v18 or higher with `npm`
-* **Git:** Installed and available in PATH
+* **Git:** Installed and in PATH
 
 ### 1. Clone the Repository
 ```bash
@@ -209,23 +143,14 @@ cd SkillPulse-Workforce-Intelligence-Platform
 ### 2. Backend Setup (FastAPI)
 ```powershell
 cd backend
-
-# Option A: Using uv (Recommended)
-uv run python -m app.database.seed
 $env:PYTHONPATH="."
+uv run python -m app.database.seed
 uv run uvicorn app.main:app --reload --port 8000
-
-# Option B: Using standard Python venv
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt   # or uv pip install
-python -m app.database.seed
-uvicorn app.main:app --reload --port 8000
 ```
-* Interactive Swagger API Documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
+* Interactive Swagger API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 * Healthcheck Endpoint: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
 
-### 3. Frontend Setup (React + Vite)
+### 3. Frontend Setup (React 19 + Vite)
 ```powershell
 cd frontend
 npm install
@@ -235,80 +160,29 @@ npm run dev
 
 ---
 
-## 8. REST API Reference
+## 6. Automated Verification Suite
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/v1/health` | Live system and database connectivity healthcheck |
-| `GET` | `/api/v1/analytics/overview` | Platform-level KPIs (jobs, unique skills, district coverage) |
-| `GET` | `/api/v1/analytics/skills` | Skill-demand counts categorized by sector |
-| `GET` | `/api/v1/analytics/districts` | Spatial demand distribution across Maharashtra districts |
-| `POST` | `/api/v1/jobs/import` | Upload CSV dataset to ingest job postings |
-| `GET` | `/api/v1/jobs` | Retrieve paginated job postings (filter by `sector`, `district_id`) |
-| `GET` | `/api/v1/skills` | Retrieve canonical skill taxonomy |
-| `POST` | `/api/v1/skills/extract` | Extract canonical skills on-the-fly from unstructured text |
-| `GET` | `/api/v1/skills/top-demanded` | Retrieve highest demand skills across all postings |
-| `GET` | `/api/v1/courses` | Retrieve vocational/ITI courses with covered competencies |
-| `POST` | `/api/v1/courses` | Create new course and map taught competencies |
-| `POST` | `/api/v1/analysis/skill-gap` | Compute weighted skill alignment score for course vs. role |
-| `GET` | `/api/v1/analysis/{id}` | Retrieve historical skill gap audit report |
-| `GET` | `/api/v1/recommendations` | Retrieve modernization proposals (filter by `status`, `course_id`) |
-| `PATCH`| `/api/v1/recommendations/{id}`| Update proposal approval status (`PENDING`, `APPROVED`, `REJECTED`) |
-
----
-
-## 9. Automated Test Suite
-
-SkillPulse includes automated test suites covering every major functional module:
+Run all automated test suites covering syllabus ingestion, hybrid NLP, gap scoring, and BoS approvals:
 
 ```powershell
 cd backend
 $env:PYTHONPATH="."
 
-# 1. Run Data Layer & Ingestion Tests
 uv run python tests/test_step2.py
-
-# 2. Run NLP Preprocessing & Analytics Tests
 uv run python tests/test_nlp_pipeline.py
-
-# 3. Run Skill Gap & Recommendation Engine Tests
 uv run python tests/test_step4_gap_analysis.py
 ```
 
-**Test Verification Summary:**
-```text
-✓ Health check passed (/api/v1/health -> database connected)
-✓ Districts verified: 36 Maharashtra districts seeded
-✓ Skills verified: 28 skills mapped
-✓ Courses verified: 4 vocational courses seeded
-✓ CSV Ingestion verified: 10/10 jobs imported from sample dataset
-✓ Text Preprocessor: HTML & formatting noise cleaned
-✓ Skill Normalizer: Synonyms, abbreviations & fuzzy matches verified
-✓ Skill Matcher: Extracted 7 canonical competencies from unstructured descriptions
-✓ Skill Gap Analysis: Computed deterministic weighted score (25.0% for COPA vs. Python Developer)
-✓ Curriculum Modernizer: Generated 3 actionable syllabus units with learning outcomes & labs
-✓ Approval Workflow: PATCH /api/v1/recommendations/{id} updated status to APPROVED
-
-🎉 ALL TEST SUITES PASSING (100% SUCCESS)
-```
-
 ---
 
-## 10. Demonstration Walkthrough (3 Minutes)
+## 7. Demonstration Walkthrough (3 Minutes)
 
-1. **Verify Live Status:** Open the UI at [http://localhost:5173](http://localhost:5173). The top-right badge will show **"Backend API Connected"**.
-2. **Review Labour Market Intel:** Click on the **Labour Market Intel** tab to inspect ingested job postings across Maharashtra. Paste any job posting into the **Live NLP Skill Extraction Playground** to watch skills extracted in real time.
-3. **Execute Skill Gap Audit:** Navigate to the **Skill Gap Analyzer** tab. Select the course *"Computer Operator and Programming Assistant (COPA)"* and select the benchmark role *"Junior Python Developer"*. Click **Generate Skill Gap Audit**.
-4. **Examine Audit Results:** The gauge renders a **25% Skill Alignment Score**. Review the 3 columns:
-   * *Covered:* `SQL` (100% weight)
-   * *Missing:* `Python`, `Git`, `Problem Solving`
-5. **Approve Modernization Proposals:** Click **View Modernization Proposals** to enter the **Curriculum Modernizer** hub. Review the proposed *Applied Python Competency* unit (complete with measurable learning outcomes and lab exercises). Click **Approve** to officially endorse the upgrade.
-6. **Inspect District Telemetry:** Click **District Intel** to review spatial demand concentrations in Pune, Mumbai, Nagpur, Nashik, and Chhatrapati Sambhajinagar with localized shortage policy advisories.
-
----
-
-## 11. Contributors & Acknowledgements
-
-* **Developed for:** Smart India Hackathon (SIH) – Problem Statement 26134
-* **Target Beneficiary:** Maharashtra State Innovation Society (MSInS), Department of Skills, Employment, Entrepreneurship and Innovation, Government of Maharashtra
-* **Repository:** [https://github.com/LIKHIT123498/SkillPulse-Workforce-Intelligence-Platform](https://github.com/LIKHIT123498/SkillPulse-Workforce-Intelligence-Platform)
+1. **Verify Live Status:** Open the UI at [http://localhost:5173](http://localhost:5173). The top-right badge will show **"Engine Connected"**.
+2. **Review Tech Market Intel:** Inspect software engineering demand across Indian tech hubs (Bengaluru, Hyderabad, Pune, Gurugram). Paste any syllabus module into the **Live NLP Skill Extraction Playground** to see skills extracted with confidence scores.
+3. **Upload or Select Syllabus:** Go to the **Curriculum Gap Audit** tab. Either click **Upload Syllabus PDF** to parse an official PDF or select an existing university scheme (*e.g., "VTU 2022 Scheme - BCS501: Software Engineering"*).
+4. **Run Benchmark Audit:** Select target role *"Senior Backend Engineer (Bengaluru)"* and click **Generate Syllabus Gap Audit**.
+5. **Inspect Alignment Gauge:** Review the calculated alignment score and the 3-column breakdown:
+   * *Covered in Syllabus:* `Object-Oriented Programming`, `Software Testing`, `Agile Methodologies`, `Git`
+   * *Industry Gaps:* `Docker`, `FastAPI`, `PostgreSQL`, `Redis`, `Kafka`, `System Design & Microservices`
+6. **Board of Studies (BoS) Endorsement:** Navigate to **Board of Studies (BoS)**. Review the proposed *Applied Containerization & Docker Lab* module with specific measurable outcomes. Click **Approve (BoS)** to officially endorse the curriculum upgrade.
+7. **India Tech Hub Telemetry:** Inspect the **India Tech Hubs** tab to observe city-level hiring specialization across Bengaluru, Hyderabad, Pune, Gurugram, and Chennai.

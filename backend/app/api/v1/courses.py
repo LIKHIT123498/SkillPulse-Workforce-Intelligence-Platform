@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 
 from app.database.session import get_db
@@ -7,6 +7,7 @@ from app.models.course import Course, CourseSkill
 from app.models.skill import Skill
 from app.models.location import District
 from app.schemas.course import CourseResponse, CourseCreate
+from app.services.syllabus_parser import ingest_syllabus_pdf
 
 router = APIRouter(prefix="/courses", tags=["Courses & Curricula"])
 
@@ -50,3 +51,28 @@ def create_course(course_in: CourseCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(course)
     return course
+
+@router.post("/import-pdf")
+async def upload_syllabus_pdf(
+    file: UploadFile = File(..., description="University syllabus PDF file (VTU, Mumbai Univ, AKTU, SPPU, etc.)"),
+    institution: Optional[str] = Form("Technical University"),
+    qualification: Optional[str] = Form("B.Tech Computer Science & Engineering"),
+    db: Session = Depends(get_db)
+):
+    """
+    Automated University Syllabus Ingestion:
+    Parses a syllabus PDF using pypdf, extracts modules and Course Outcomes (COs),
+    and executes hybrid skill extraction to auto-populate the Course & CourseSkill database.
+    """
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Only PDF syllabus documents are supported")
+    
+    content = await file.read()
+    if len(content) == 0:
+        raise HTTPException(status_code=400, detail="Uploaded PDF is empty")
+
+    try:
+        result = ingest_syllabus_pdf(db, content, institution=institution, qualification=qualification)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to parse syllabus PDF: {str(e)}")

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../services/api";
-import { Briefcase, Cpu, Award, MapPin, TrendingUp, AlertTriangle, ArrowRight } from "lucide-react";
+import { Briefcase, Cpu, Award, MapPin, TrendingUp, ArrowRight, BookOpen } from "lucide-react";
 
 export function OverviewTab({ setActiveTab }) {
   const [data, setData] = useState(null);
@@ -23,14 +23,14 @@ export function OverviewTab({ setActiveTab }) {
   }
 
   if (loading) {
-    return <div className="sp-loading-spinner">Loading workforce intelligence metrics...</div>;
+    return <div className="sp-loading-spinner">Loading tech curriculum & hiring intelligence...</div>;
   }
 
   const kpis = [
-    { label: "Job Postings Analyzed", value: data?.total_jobs_analyzed || 0, icon: Briefcase, color: "blue" },
-    { label: "Unique Skills Mapped", value: data?.unique_skills_identified || 0, icon: Cpu, color: "emerald" },
-    { label: "Districts Covered", value: data?.districts_covered || 0, icon: MapPin, color: "amber" },
-    { label: "Active Voc. Courses", value: 4, icon: Award, color: "purple" },
+    { label: "Software Job Postings", value: data?.total_jobs_analyzed || 0, icon: Briefcase, color: "blue" },
+    { label: "CSE Skills & Stacks", value: data?.unique_skills_identified || 0, icon: Cpu, color: "emerald" },
+    { label: "Active Tech Hubs", value: data?.districts_covered || 0, icon: MapPin, color: "amber" },
+    { label: "University Syllabi", value: 9, icon: Award, color: "purple" },
   ];
 
   return (
@@ -38,14 +38,14 @@ export function OverviewTab({ setActiveTab }) {
       {/* Banner */}
       <div className="sp-hero-banner">
         <div>
-          <h2>Evidence-Based Skill Alignment for Maharashtra</h2>
+          <h2>Bridging Computer Science Syllabi with Real-World Tech Hiring Demand</h2>
           <p>
-            Bridging the gap between rapid industry technology shifts and vocational curricula across 36 districts through continuous labour market telemetry.
+            Equipping university Board of Studies (BoS), CSE academic heads, and engineering students with real-time telemetry from India's premier tech clusters (Bengaluru, Hyderabad, Pune, Gurugram, Noida).
           </p>
         </div>
         <div className="sp-banner-actions">
           <button className="sp-btn-primary" onClick={() => setActiveTab("gap")}>
-            Run Skill Gap Audit <ArrowRight size={16} />
+            Audit University Syllabus Gap <ArrowRight size={16} />
           </button>
         </div>
       </div>
@@ -72,9 +72,9 @@ export function OverviewTab({ setActiveTab }) {
           <div className="sp-card-header">
             <div className="sp-card-title">
               <TrendingUp size={20} className="text-emerald" />
-              High-Demand Technical Competencies
+              Highest-Demanded Tech Competencies
             </div>
-            <span className="sp-tag">Calculated from Ingested Jobs</span>
+            <span className="sp-tag">Calculated from Live Indian Postings</span>
           </div>
           <div className="sp-skill-bars">
             {data?.top_demanded_skills?.map((item, i) => (
@@ -86,7 +86,7 @@ export function OverviewTab({ setActiveTab }) {
                 <div className="sp-progress-track">
                   <div
                     className="sp-progress-fill"
-                    style={{ width: `${Math.min(item.count * 12, 100)}%` }}
+                    style={{ width: `${Math.min(item.count * 8, 100)}%` }}
                   ></div>
                 </div>
               </div>
@@ -94,14 +94,14 @@ export function OverviewTab({ setActiveTab }) {
           </div>
         </div>
 
-        {/* Sector Breakdown */}
+        {/* Sector / Tech Specialization Breakdown */}
         <div className="sp-card">
           <div className="sp-card-header">
             <div className="sp-card-title">
-              <Briefcase size={20} className="text-blue" />
-              Industry Sector Distribution
+              <BookOpen size={20} className="text-blue" />
+              Hiring Sector & Engineering Domain Breakdown
             </div>
-            <span className="sp-tag">Maharashtra Hubs</span>
+            <span className="sp-tag">Tier-1 Tech Companies</span>
           </div>
           <div className="sp-sector-list">
             {data?.sector_distribution?.map((sec, i) => (

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../services/api";
-import { Search, Filter, Sparkles, MapPin, Building, Tag } from "lucide-react";
+import { Search, Sparkles, MapPin, Building, Code } from "lucide-react";
 
 export function LabourMarketTab() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sectorFilter, setSectorFilter] = useState("");
   const [nlpInput, setNlpInput] = useState(
-    "Requirements: 3+ years experience with Python, Machine Learning models (scikit-learn), SQL queries, and Cloud Computing on AWS. Strong communication skills required."
+    "Job Title: Senior Backend Software Engineer\nLocation: Bengaluru\nRequirements: 3+ years experience with Python or Go, building high-throughput microservices using FastAPI, Docker, and PostgreSQL. Hands-on experience with Redis caching, Kafka message streaming, and deploying on AWS Cloud. Strong grasp of System Design and CI/CD pipelines."
   );
   const [nlpResults, setNlpResults] = useState(null);
   const [nlpExtracting, setNlpExtracting] = useState(false);
@@ -38,7 +38,7 @@ export function LabourMarketTab() {
     } catch (e) {
       console.error("NLP extraction error:", e);
     } finally {
-      setNlpExtracting(false);
+      setLoading(false);
     }
   }
 
@@ -49,35 +49,35 @@ export function LabourMarketTab() {
         <div className="sp-card-header">
           <div className="sp-card-title">
             <Sparkles size={20} className="text-purple" />
-            Live NLP Skill Extraction Playground (FR-104)
+            Live NLP Skill Extraction & Hybrid Matcher Playground
           </div>
-          <span className="sp-tag sp-tag-purple">spaCy / Transformer Grounded</span>
+          <span className="sp-tag sp-tag-purple">Hybrid Word-Boundary & Semantic Parsing</span>
         </div>
         <p className="sp-card-desc">
-          Paste any raw, unstructured job description or curriculum document to extract canonical skills, compute confidence weights, and detect requirement sections in real time.
+          Paste any raw software engineering job posting, syllabus module, or internship requirement to extract canonical competencies, detect Course Outcomes (COs), and compute confidence weights in real time.
         </p>
 
         <div className="sp-nlp-controls">
           <textarea
             className="sp-textarea"
-            rows={3}
+            rows={4}
             value={nlpInput}
             onChange={(e) => setNlpInput(e.target.value)}
-            placeholder="Paste raw job description here..."
+            placeholder="Paste raw tech JD or university syllabus module text here..."
           />
           <button
             className="sp-btn-primary"
             onClick={handleExtractSkills}
             disabled={nlpExtracting}
           >
-            {nlpExtracting ? "Extracting..." : "Extract Skills with NLP"}
+            {nlpExtracting ? "Extracting Competencies..." : "Extract Tech Competencies with NLP"}
           </button>
         </div>
 
         {nlpResults && (
           <div className="sp-nlp-results">
             <div className="sp-nlp-results-header">
-              Extracted <strong>{nlpResults.total_skills_extracted}</strong> canonical competencies:
+              Extracted <strong>{nlpResults.total_skills_extracted}</strong> canonical software competencies:
             </div>
             <div className="sp-pill-group">
               {nlpResults.skills.map((s, idx) => (
@@ -92,12 +92,12 @@ export function LabourMarketTab() {
         )}
       </div>
 
-      {/* Filterable Job Postings Directory */}
+      {/* Filterable Software Job Directory */}
       <div className="sp-card">
         <div className="sp-card-header">
           <div className="sp-card-title">
             <Search size={20} className="text-blue" />
-            Ingested Job Postings & Demand Signals ({jobs.length})
+            Ingested Software Job Market Records ({jobs.length})
           </div>
           <div className="sp-filter-bar">
             <select
@@ -105,18 +105,20 @@ export function LabourMarketTab() {
               value={sectorFilter}
               onChange={(e) => setSectorFilter(e.target.value)}
             >
-              <option value="">All Industry Sectors</option>
-              <option value="Information Technology">Information Technology</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Automotive">Automotive</option>
-              <option value="Logistics">Logistics</option>
-              <option value="Electrical">Electrical</option>
+              <option value="">All Engineering Domains</option>
+              <option value="Product Engineering">Product Engineering</option>
+              <option value="FinTech">FinTech</option>
+              <option value="Cloud & Infrastructure">Cloud & Infrastructure</option>
+              <option value="Artificial Intelligence">Artificial Intelligence</option>
+              <option value="IT Services">IT Services</option>
+              <option value="Quick Commerce">Quick Commerce</option>
+              <option value="SaaS">SaaS</option>
             </select>
           </div>
         </div>
 
         {loading ? (
-          <div className="sp-loading-spinner">Loading job market records...</div>
+          <div className="sp-loading-spinner">Loading tech job market records...</div>
         ) : (
           <div className="sp-jobs-list">
             {jobs.map((job) => (
@@ -126,10 +128,10 @@ export function LabourMarketTab() {
                     <h3 className="sp-job-title">{job.title}</h3>
                     <div className="sp-job-meta">
                       <span className="sp-meta-item">
-                        <Building size={14} /> {job.company_name || "Enterprise"}
+                        <Building size={14} /> {job.company_name || "Tech Enterprise"}
                       </span>
                       <span className="sp-meta-item">
-                        <MapPin size={14} /> {job.district?.district_name || "Maharashtra"}
+                        <MapPin size={14} /> {job.district?.district_name || "India Tech Hub"}
                       </span>
                       <span className="sp-badge-sector">{job.sector}</span>
                     </div>
@@ -137,7 +139,7 @@ export function LabourMarketTab() {
                 </div>
                 <p className="sp-job-desc">{job.description}</p>
                 <div className="sp-job-skills">
-                  <span className="sp-skills-label">Required Skills:</span>
+                  <span className="sp-skills-label">Required Tech Stack:</span>
                   <div className="sp-pill-group">
                     {job.required_skills?.map((js, idx) => (
                       <span key={idx} className="sp-badge-skill">

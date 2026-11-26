@@ -46,11 +46,11 @@ export default function App() {
       <footer className="sp-footer">
         <div className="sp-footer-inner">
           <div>
-            <strong>SkillPulse – Workforce Intelligence Platform</strong>
-            <p>SIH Problem Statement 26134 · Aligning Skill Development Programs with Emerging Job Demands</p>
+            <strong>SkillPulse Academic – Computer Science Curriculum & Tech Talent Intelligence</strong>
+            <p>SIH Problem Statement 26134 · Aligning Academic University Syllabi with Software Industry Demands</p>
           </div>
           <div className="sp-footer-credits">
-            Department of Skills, Employment, Entrepreneurship & Innovation · Government of Maharashtra
+            Benchmarking VTU, Mumbai University, SPPU, AKTU & Tier-1 Indian Tech Clusters
           </div>
         </div>
       </footer>

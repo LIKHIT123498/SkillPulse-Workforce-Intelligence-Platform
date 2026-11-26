@@ -1,13 +1,13 @@
 import React from "react";
-import { LayoutDashboard, Briefcase, GitCompare, Sparkles, MapPin, Activity } from "lucide-react";
+import { LayoutDashboard, Briefcase, GitCompare, Sparkles, MapPin, GraduationCap } from "lucide-react";
 
 export function Navbar({ activeTab, setActiveTab, isConnected }) {
   const navItems = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
-    { id: "jobs", label: "Labour Market Intel", icon: Briefcase },
-    { id: "gap", label: "Skill Gap Analyzer", icon: GitCompare },
-    { id: "modernization", label: "Curriculum Modernizer", icon: Sparkles },
-    { id: "districts", label: "District Intel", icon: MapPin },
+    { id: "jobs", label: "Tech Market Intel", icon: Briefcase },
+    { id: "gap", label: "Curriculum Gap Audit", icon: GitCompare },
+    { id: "modernization", label: "Board of Studies (BoS)", icon: Sparkles },
+    { id: "districts", label: "India Tech Hubs", icon: MapPin },
   ];
 
   return (
@@ -15,19 +15,19 @@ export function Navbar({ activeTab, setActiveTab, isConnected }) {
       <div className="sp-header-top">
         <div className="sp-brand">
           <div className="sp-logo">
-            <Activity className="sp-logo-icon" />
+            <GraduationCap className="sp-logo-icon" size={24} />
           </div>
           <div>
-            <div className="sp-brand-title">SkillPulse</div>
-            <div className="sp-brand-sub">Workforce Intelligence & Curriculum Alignment Platform</div>
+            <div className="sp-brand-title">SkillPulse Academic</div>
+            <div className="sp-brand-sub">B.Tech CSE Curriculum & Tech Talent Intelligence Platform</div>
           </div>
         </div>
 
         <div className="sp-header-meta">
-          <div className="sp-badge-gov">Govt. of Maharashtra · MSInS</div>
+          <div className="sp-badge-gov">Engineering Higher Ed & Industry Alignment</div>
           <div className={`sp-status-pill ${isConnected ? "online" : "offline"}`}>
             <span className="sp-status-dot"></span>
-            {isConnected ? "Backend API Connected" : "Connecting to API..."}
+            {isConnected ? "Engine Connected" : "Connecting to API..."}
           </div>
         </div>
       </div>
